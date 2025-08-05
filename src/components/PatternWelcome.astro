@@ -1,13 +1,188 @@
 ---
+import ProjectScreen from './ProjectScreen.astro';
 ---
 
 <div id="container">
+	<div class="scrollable-wrapper">
+		<!-- First Screen -->
+		<section class="screen first-screen" id="first-screen">
+			<div class="content-center">
+				<div class="text-box">
+					<span class="highlight-text">
+						Voluptate veniam aliquip nisi. Officia veniam cupidatat proident elit fugiat mollit velit eiusmod 
+					</span>
+					<span class="normal-text">
+						dolor proident sunt. Ipsum fugiat ea consequat consequat fugiat eu eu nulla commodo duis. Minim est ea ea ut aliqua.
+					</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- Second Screen -->
+		<ProjectScreen />
+	</div>
 </div>
 
 <style>
+	@font-face {
+		font-family: 'PolySans Trial';
+		src: url('../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-SlimMono.otf') format('opentype');
+		font-weight: 300;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'PolySans Trial';
+		src: url('../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-NeutralMono.otf') format('opentype');
+		font-weight: 400;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'PolySans Trial';
+		src: url('../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-MedianMono.otf') format('opentype');
+		font-weight: 500;
+		font-style: normal;
+		font-display: swap;
+	}
+
+	@font-face {
+		font-family: 'PolySans Trial';
+		src: url('../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-BulkyMono.otf') format('opentype');
+		font-weight: 700;
+		font-style: normal;
+		font-display: swap;
+	}
+
 	#container {
 		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
-		height: 100%;
+		height: 300vh;
 		width: 100%;
+		overflow-x: hidden;
+		position: relative;
+	}
+
+	.scrollable-wrapper {
+		height: 300vh;
+		position: relative;
+	}
+
+	.screen {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 0.8s ease, transform 0.8s ease;
+	}
+
+	/* First Screen Styles */
+	.first-screen {
+		background: transparent;
+		z-index: 2;
+	}
+
+	.first-screen.hidden {
+		opacity: 0;
+		transform: translateY(-50px);
+		pointer-events: none;
+	}
+
+	.content-center {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		height: 100%;
+		padding: 0 5%;
+	}
+
+	.text-box {
+		max-width: 900px;
+		text-align: left;
+		padding: 50px 0;
+		/* Removed border and background for transparency */
+	}
+
+	.highlight-text {
+		color: #F95F4A;
+		font-size: 32px;
+		font-family: 'PolySans Trial', Arial, sans-serif;
+		font-weight: 300;
+		text-transform: uppercase;
+		word-wrap: break-word;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	.normal-text {
+		color: white;
+		font-size: 32px;
+		font-family: 'PolySans Trial', Arial, sans-serif;
+		font-weight: 300;
+		text-transform: uppercase;
+		word-wrap: break-word;
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	/* Responsive Design */
+	@media (max-width: 768px) {
+		.highlight-text, .normal-text {
+			font-size: 28px;
+		}
+
+		.text-box {
+			padding: 30px;
+		}
 	}
 </style>
+
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		const firstScreen = document.getElementById('first-screen');
+		const projectScreen = document.getElementById('project-screen');
+		
+		console.log('First screen:', firstScreen);
+		console.log('Project screen:', projectScreen);
+		
+		if (!firstScreen || !projectScreen) {
+			console.error('Could not find screen elements');
+			return;
+		}
+
+		// Initially hide project screen
+		projectScreen.style.opacity = '0';
+		projectScreen.style.transform = 'translateY(50px)';
+		
+		function handleScroll() {
+			const scrollPosition = window.scrollY;
+			const windowHeight = window.innerHeight;
+			
+			console.log('Scroll position:', scrollPosition);
+			console.log('Window height:', windowHeight);
+			
+			if (scrollPosition > windowHeight * 0.5) {
+				// Show project screen
+				firstScreen.classList.add('hidden');
+				projectScreen.style.opacity = '1';
+				projectScreen.style.transform = 'translateY(0)';
+			} else {
+				// Show first screen
+				firstScreen.classList.remove('hidden');
+				projectScreen.style.opacity = '0';
+				projectScreen.style.transform = 'translateY(50px)';
+			}
+		}
+
+		window.addEventListener('scroll', handleScroll);
+		
+		// Initial call
+		handleScroll();
+	});
+</script>
