@@ -1,13 +1,26 @@
 ---
 ---
 
-<div id="container">
+<div class="image-container">
+	<img id="background" src="/BG.svg" alt="" />
 </div>
 
 <style>
-	#container {
-		font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+	.image-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;  
 		height: 100%;
+		overflow: hidden;  
+		z-index: -1;	
+	}
+
+	#background {
 		width: 100%;
+		height: 100%;
+		object-fit: cover;      
+		object-position: left;   
+		
 	}
 </style>
