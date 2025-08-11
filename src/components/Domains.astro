@@ -238,11 +238,19 @@
                 force3D: true
             });
 
+            // initial state for subtitle (text)
+            gsap.set(subtitle, {
+                opacity: 0,
+                y: 20,
+                scale: 0.9,
+                force3D: true
+            });
+
             // Simplified timeline with better performance
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: '.domains-section',
-                    start: 'top top',
+                    start: '-580px top',
                     end: 'bottom bottom',
                     scrub: 1.2,
                     pin: 'true',
@@ -253,13 +261,20 @@
             });
 
             // Phase 1: Appear and form grid
-            tl.to(items, {
+            tl.to(subtitle, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 2,
+                ease: "power2.out"
+            })
+            .to(items, {
                 opacity: 1,
                 scale: 1,
                 duration: 2,
                 ease: "power2.out",
                 stagger: 0.1
-            })
+            }, "<+=0.2")
             .to(items, {
                 x: (i) => gridPos[i].x,
                 y: (i) => gridPos[i].y,
