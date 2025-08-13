@@ -1,28 +1,6 @@
 ---
-// This is now a proper Astro component
 ---
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Inter, Roboto, 'Helvetica Neue', Arial, sans-serif;
-            overflow-x: hidden;
-        }
-
-        .spacer {
-            height: 100vh;
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-        }
-
         .domains-section {
             height: 300vh;
             background: url('/background_domains.svg');
@@ -42,7 +20,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow: visible;
             /* Optimize rendering */
             will-change: transform;
             transform: translateZ(0);
@@ -56,7 +34,7 @@
             font-weight: 400;
             max-width: 800px;
             position: absolute;
-            top: 15%;
+            top: 10%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10;
@@ -78,6 +56,8 @@
             will-change: transform;
             transform-style: preserve-3d;
             backface-visibility: hidden;
+            overflow: visible;
+            padding: 20px; 
         }
 
         .domain-item {
@@ -90,6 +70,8 @@
             transform-style: preserve-3d;
             backface-visibility: hidden;
             contain: layout style paint;
+            padding: 10px;
+            margin: 10px;
         }
 
         .cassette-img {
@@ -104,16 +86,7 @@
             image-rendering: optimizeQuality;
             -webkit-backface-visibility: hidden;
             backface-visibility: hidden;
-        }
-
-        .spacer-after {
-            height: 100vh;
-            background: linear-gradient(45deg, #764ba2 0%, #667eea 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
+            transform-origin: center center;
         }
 
         @media (max-width: 768px) {
@@ -304,7 +277,7 @@
                 ease: "power1.inOut"
             })
             .to(items, {
-                x: (i) => zoomPos[i].x,  // Move to wider positions
+                x: (i) => zoomPos[i].x,
                 y: (i) => zoomPos[i].y,
                 opacity: 100,
                 scale: 0.5,
@@ -325,7 +298,8 @@
                     hoverTween = gsap.to(img, {
                         scale: 1.03,
                         duration: 0.2,
-                        ease: "power2.out"
+                        ease: "power2.out",
+                        transformOrigin: "center center"
                     });
                 });
                 
@@ -334,13 +308,13 @@
                     hoverTween = gsap.to(img, {
                         scale: 1,
                         duration: 0.2,
-                        ease: "power2.out"
+                        ease: "power2.out",
+                        transformOrigin: "center center"
                     });
                 });
             });
         }
 
-        // Initialize when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initAnimation);
         } else {
