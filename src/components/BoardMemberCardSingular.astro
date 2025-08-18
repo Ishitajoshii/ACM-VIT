@@ -1,0 +1,170 @@
+---
+interface Props {
+    title: string;
+    fullName: string;
+    position: string;
+    imageUrl: string;
+    linkedinUrl?: string;
+    googleScholarUrl?: string;
+    githubUrl?: string;
+}
+
+const {
+    title,
+    fullName,
+    position,
+    imageUrl,
+    linkedinUrl,
+    googleScholarUrl,
+    githubUrl,
+} = Astro.props;
+---
+
+<div
+    class="relative w-[25vw] h-[15.625vw] max-h-[15.625vw] rounded-lg bg-white overflow-hidden flex items-end justify-center"
+>
+    <!-- Background Pattern -->
+    <div
+        class="absolute inset-0 pointer-events-none opacity-50 z-0"
+        style="background-image: url('/noise.svg'); background-size: cover;"
+    >
+    </div>
+    <div
+        class="w-[97%] h-[96.5%] flex justify-center items-center absolute z-20 pointer-events-none"
+    >
+        <img
+            src="/casette-layout-orange.svg"
+            alt="Background Pattern"
+            class="absolute w-full h-full object-cover"
+        />
+    </div>
+
+    <div
+        class="w-full flex justify-center items-center z-20 h-[20%] pb-1 absolute bottom-0"
+    >
+        <img
+            src="/acm-logo-black.svg"
+            alt="ACM-VIT Logo"
+            class="h-full object-cover"
+        />
+    </div>
+
+    <!-- Member Info -->
+    <div class="flex items-center w-full h-full text-center z-10">
+        <div class="h-full w-2/5 flex items-end">
+            <img
+                src={imageUrl}
+                alt={fullName}
+                class="w-full h-full object-cover"
+            />
+        </div>
+
+        <div class="w-3/5 z-20">
+            <h3
+                style="font-family: 'PolySans Bold';"
+                class="text-[1.2vw] text-gray-900 m-0"
+            >
+                {title}
+                {fullName}
+            </h3>
+            <p
+                style="font-family: PolySans Slim;"
+                class="text-[0.8vw] text-primary-orange m-0"
+            >
+                {position}
+            </p>
+
+            <!-- Social Links -->
+            <div class="flex justify-center gap-2 mt-2 text-red-500">
+                {
+                    linkedinUrl && (
+                        <a
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:cursor-pointer"
+                        >
+                            <img
+                                src="/linkedin-orange.svg"
+                                alt="LinkedIn"
+                                class="w-[1.5vw] h-[1.5vw]"
+                            />
+                        </a>
+                    )
+                }
+
+                {
+                    googleScholarUrl && (
+                        <a
+                            href={googleScholarUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:cursor-pointer"
+                        >
+                            <img
+                                src="/google-scholar-orange.svg"
+                                alt="Google Scholar"
+                                class="w-[1.5vw] h-[1.5vw]"
+                            />
+                        </a>
+                    )
+                }
+
+                {
+                    githubUrl && (
+                        <a
+                            href={githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="hover:cursor-pointer"
+                        >
+                            <img
+                                src="/github-orange.svg"
+                                alt="GitHub"
+                                class="w-[1.5vw] h-[1.5vw]"
+                            />
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    @font-face {
+        font-family: "PolySans Slim";
+        src: url("../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-SlimMono.otf")
+            format("opentype");
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PolySans Trial";
+        src: url("../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-NeutralMono.otf")
+            format("opentype");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PolySans Medium";
+        src: url("../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-MedianMono.otf")
+            format("opentype");
+        font-weight: 500;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    @font-face {
+        font-family: "PolySans Bold";
+        src: url("../assets/fonts/PolySans-trial/PolySans-trial/Mono/PolySansTrial-BulkyMono.otf")
+            format("opentype");
+        font-weight: 700;
+        font-style: normal;
+        font-display: swap;
+    }
+</style>

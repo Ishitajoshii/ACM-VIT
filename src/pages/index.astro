@@ -6,6 +6,7 @@ import Domains from "../components/Domains.astro";
 import Layout from "../layouts/Layout.astro";
 import Pattern from "./pattern.astro";
 import Gallery from "../components/Gallery.astro";
+import BoardMemberCardSingular from "../components/BoardMemberCardSingular.astro";
 import "../styles/globals.css";
 // import Hero from "./hero.astro";
 
@@ -14,5 +15,13 @@ import "../styles/globals.css";
 ---
 
 <Layout>
-	<Gallery />
+	<BoardMemberCardSingular
+		title="Dr."
+		fullName="Aswani Kumar Cherukuri"
+		position="ACM-W Vice Chairperson"
+		imageUrl="/aastik.svg"
+		linkedinUrl="https://linkedin.com/in/example"
+		googleScholarUrl="https://scholar.google.com/citations?user=example"
+		githubUrl="https://github.com/example"
+	/>
 </Layout>
