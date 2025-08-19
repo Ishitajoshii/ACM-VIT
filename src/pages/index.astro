@@ -7,7 +7,10 @@ import Layout from "../layouts/Layout.astro";
 import Pattern from "./pattern.astro";
 import Gallery from "../components/Gallery.astro";
 import BoardMemberCardSingular from "../components/BoardMemberCardSingular.astro";
+import Board from "./Board.astro";
 import "../styles/globals.css";
+import PartnerCasetteSingular from "../components/PartnerCasetteSingular.astro";
+import Partners from "./Partners.astro";
 // import Hero from "./hero.astro";
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -15,13 +18,11 @@ import "../styles/globals.css";
 ---
 
 <Layout>
-	<BoardMemberCardSingular
-		title="Dr."
-		fullName="Aswani Kumar Cherukuri"
-		position="ACM-W Vice Chairperson"
-		imageUrl="/aastik.svg"
-		linkedinUrl="https://linkedin.com/in/example"
-		googleScholarUrl="https://scholar.google.com/citations?user=example"
-		githubUrl="https://github.com/example"
-	/>
+	<PatternWelcome />
+	<Welcome />
+	<ProjectScreen />
+	<Domains />
+	<Board />
+	<Gallery />
+	<Partners />
 </Layout>
