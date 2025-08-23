@@ -91,10 +91,14 @@ const themeGradient = getThemeClasses(themeColor);
 
     <!-- Tech Stack Icons -->
     {techIcons.length > 0 && (
-      <div class="flex justify-center gap-4 mb-8 flex-wrap">
+      <div class="flex justify-center items-center gap-8 mb-12 flex-wrap px-8">
         {techIcons.map((icon) => (
-          <div class="w-12 h-12 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
-            <img src={icon.src} alt={icon.alt} class="w-8 h-8" />
+          <div class="flex items-center justify-center hover:scale-110 transition-transform duration-300">
+            <img 
+              src={icon.src} 
+              alt={icon.alt} 
+              class="w-12 h-12 md:w-12 md:h-12 grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100" 
+            />
           </div>
         ))}
       </div>
