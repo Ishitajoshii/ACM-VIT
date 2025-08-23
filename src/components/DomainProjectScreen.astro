@@ -1,4 +1,6 @@
 ---
+import { themeColors } from '../data/domainsData';
+
 // Props interface for the component
 export interface Props {
   title?: string;
@@ -26,22 +28,12 @@ const {
   backUrl = "/"
 } = Astro.props;
 
-// Generate theme classes based on color
-const getThemeClasses = (color: string) => {
-  const colorMap: Record<string, string> = {
-    purple: "from-purple-600 to-purple-400",
-    blue: "from-blue-600 to-blue-400",
-    green: "from-green-600 to-green-400",
-    red: "from-red-600 to-red-400",
-    orange: "from-orange-600 to-orange-400",
-  };
-  return colorMap[color] || colorMap.purple;
-};
 
-const themeGradient = getThemeClasses(themeColor);
+const themeHex = themeColors[themeColor as keyof typeof themeColors] || themeColors.app;
+
 ---
 
-<div class="min-h-screen text-white">
+<div class="min-h-screen text-white" style="background-image: url('/background_pattern.svg'); background-size: cover; background-position: center; background-repeat: no-repeat;">
   <!-- Back Button -->
   <!-- <div class="absolute top-6 right-6 z-10">
     <a 
@@ -57,32 +49,35 @@ const themeGradient = getThemeClasses(themeColor);
   <!-- Hero Section with Theme Header -->
   <div class="pt-20 pb-8 px-8">
     <!-- Main Title Card -->
-    <div class="mx-auto max-w-6xl mb-8 relative">
+    <div class="mx-auto max-w-12xl mb-8 relative">
       <!-- SVG Background -->
       <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="178" viewBox="0 0 1389 178" fill="none" class="w-full">
-        <path d="M88 1.5H1301C1348.77 1.5 1387.5 40.2274 1387.5 88V90C1387.5 137.773 1348.77 176.5 1301 176.5H88C40.2274 176.5 1.5 137.773 1.5 90V88C1.5 40.2274 40.2274 1.5 88 1.5Z" fill="#9B51E0" stroke="#FEFCD9" stroke-width="3"/>
+        <path d="M88 1.5H1301C1348.77 1.5 1387.5 40.2274 1387.5 88V90C1387.5 137.773 1348.77 176.5 1301 176.5H88C40.2274 176.5 1.5 137.773 1.5 90V88C1.5 40.2274 40.2274 1.5 88 1.5Z" fill={themeHex} stroke="#FEFCD9" stroke-width="3"/>
       </svg>
       
       <!-- Content overlay -->
-      <div class="absolute inset-0 flex items-center justify-center p-8">
+      <div class="absolute inset-0 flex items-center justify-center p-4">
         <!-- Decorative Elements -->
-        <div class="absolute left-8 top-1/2 -translate-y-1/2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124" fill="none" class="animate-spin-slow">
-            <circle cx="62" cy="62" r="57.5" stroke="#1E1E1E" stroke-width="3"/>
-            <path d="M61.6582 18C67.7102 18 73.4766 19.2231 78.7246 21.4336L73.4238 30.6182L82.9629 36.126L88.2588 26.9512C97.4504 33.9379 103.81 44.4557 105.314 56.4844H94.7051V67.5H105.316C103.815 79.5413 97.4473 90.0689 88.2441 97.0586L82.9473 87.8828L73.4082 93.3906L78.709 102.572C73.4651 104.779 67.7043 106 61.6582 106C55.6035 106 49.8348 104.776 44.585 102.563L49.8945 93.3672L40.3555 87.8594L35.0527 97.0439C25.8603 90.0541 19.5005 79.5326 18 67.5H28.6123V56.4844H18.002C19.5071 44.4491 25.8735 33.9262 35.0732 26.9395L40.3721 36.1172L49.9121 30.6104L44.6094 21.4258C49.8527 19.2199 55.6129 18.0001 61.6582 18Z" fill="#1E1E1E"/>
+
+        <!--Left Pencil Thingy -->
+        <div class="absolute left-0 top-1/2 -translate-y-1/2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="260" height="260" viewBox="0 0 260 260" fill="none" class="animate-spin-slow">
+            <circle cx="130" cy="130" r="120.5" stroke="#1E1E1E" stroke-width="6"/>
+            <path d="M89.5 26C98.5 26 107.1 27.9 115 31.2L107.3 44.5L121.3 52.5L129 39.3C142.5 49.5 151.9 65 153.9 82.7H138.3V99H153.9C151.9 116.7 142.5 132.2 129 142.4L121.3 129.2L107.3 137.2L115 150.5C107.1 153.8 98.5 155.7 89.5 155.7C80.5 155.7 71.9 153.8 64 150.5L71.7 137.2L57.7 129.2L50 142.4C36.5 132.2 27.1 116.7 25.1 99H40.7V82.7H25.1C27.1 65 36.5 49.5 50 39.3L57.7 52.5L71.7 44.5L64 31.2C71.9 27.9 80.5 26 89.5 26Z" fill="#1E1E1E"/>
           </svg>
         </div>
         
-        <div class="absolute right-8 top-1/2 -translate-y-1/2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="124" height="124" viewBox="0 0 124 124" fill="none" class="animate-spin-slow">
-            <circle cx="62" cy="62" r="57.5" stroke="#1E1E1E" stroke-width="3"/>
-            <path d="M61.6582 18C67.7102 18 73.4766 19.2231 78.7246 21.4336L73.4238 30.6182L82.9629 36.126L88.2588 26.9512C97.4504 33.9379 103.81 44.4557 105.314 56.4844H94.7051V67.5H105.316C103.815 79.5413 97.4473 90.0689 88.2441 97.0586L82.9473 87.8828L73.4082 93.3906L78.709 102.572C73.4651 104.779 67.7043 106 61.6582 106C55.6035 106 49.8348 104.776 44.585 102.563L49.8945 93.3672L40.3555 87.8594L35.0527 97.0439C25.8603 90.0541 19.5005 79.5326 18 67.5H28.6123V56.4844H18.002C19.5071 44.4491 25.8735 33.9262 35.0732 26.9395L40.3721 36.1172L49.9121 30.6104L44.6094 21.4258C49.8527 19.2199 55.6129 18.0001 61.6582 18Z" fill="#1E1E1E"/>
+        <!--Right Pencil Thingy -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none" class="animate-spin-slow">
+            <circle cx="90" cy="90" r="83.5" stroke="#1E1E1E" stroke-width="4"/>
+            <path d="M89.5 26C98.5 26 107.1 27.9 115 31.2L107.3 44.5L121.3 52.5L129 39.3C142.5 49.5 151.9 65 153.9 82.7H138.3V99H153.9C151.9 116.7 142.5 132.2 129 142.4L121.3 129.2L107.3 137.2L115 150.5C107.1 153.8 98.5 155.7 89.5 155.7C80.5 155.7 71.9 153.8 64 150.5L71.7 137.2L57.7 129.2L50 142.4C36.5 132.2 27.1 116.7 25.1 99H40.7V82.7H25.1C27.1 65 36.5 49.5 50 39.3L57.7 52.5L71.7 44.5L64 31.2C71.9 27.9 80.5 26 89.5 26Z" fill="#1E1E1E"/>
           </svg>
         </div>
 
         <!-- Domain Title -->
         <div class="text-center">
-          <h1 class="text-6xl md:text-8xl font-bold text-[#1E1E1E] tracking-wider">
+          <h1 class={`font-normal text-[#1E1E1E] tracking-wider ${title === "COMPETITIVE CODING" ? "text-4xl md:text-6xl" : "text-6xl md:text-8xl"}`}>
             {title}
           </h1>
         </div>
@@ -106,17 +101,20 @@ const themeGradient = getThemeClasses(themeColor);
 
     <!-- Description -->
     <div class="max-w-4xl mx-auto text-center mb-12">
-      <p class="text-gray-300 text-lg leading-relaxed">
+      <p class="text-[#FEFCD9] text-lg leading-relaxed">
         {description}
       </p>
     </div>
 
-    <!-- Projects Button -->
-    <div class="text-center mb-12">
-      <button class={`px-8 py-3 bg-gradient-to-r ${themeGradient} rounded-full text-white font-medium hover:shadow-lg transition-shadow`}>
-        PROJECTS
-      </button>
-    </div>
+  <!-- Common font applied here for all content inside this div -->
+  <div class="flex justify-center mb-12 font-PolySans Trial font-thin ">
+    <button 
+      class="flex justify-center items-center w-[115px] h-[50px] rounded-[41px] border border-[#FEFCD9] text-white font-medium hover:shadow-lg transition-shadow"
+      style={`background-color: ${themeHex}`}
+    >
+      PROJECTS
+    </button>
+  </div>
 
     <!-- Project Cards Grid -->
     {projects.length > 0 && (
