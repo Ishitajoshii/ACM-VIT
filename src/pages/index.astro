@@ -1,12 +1,13 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-// src/pages/index.astro
+import Welcome from "../components/Welcome.astro";
+import Layout from "../layouts/Layout.astro";
+import Events from "../components/events.astro";
 ---
 
 <Layout>
-  
-  <style>
+  <Events />
+  <!-- <Welcome /> -->
+  <!-- <style>
     #viewer { width: 100%; height: 100vh; position: relative; }
     .spacer { height: 100vh; }
   </style>
@@ -27,7 +28,5 @@ import Layout from '../layouts/Layout.astro';
     endX: 3,
     showHelpers: true,
     debugMarkers: true
-    }); 
-
-  </script>
+    }); -->
 </Layout>
