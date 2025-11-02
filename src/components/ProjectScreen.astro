@@ -1,7 +1,7 @@
 ---
 import Cassette from "./Cassette.astro";
 export interface Props {
-    projectData: {
+    projects: Array<{
         cassette: {
             src: string;
             alt: string;
@@ -43,11 +43,24 @@ export interface Props {
             textColor: string;
             contentBlockBackground: string;
             hoverShadow: string;
+            // optional: borderAlpha?: number;
         };
-    };
+    }>;
 }
 
-const {projectData} = Astro.props;
+const { projects = [] } = Astro.props;
+// pick the first project for this screen; change selection logic as needed
+const projectData = projects[0] ?? {
+    cassette: { src: '', alt: '' },
+    textContent: { blocks: ['', ''] },
+    buttons: {
+        primary: { backgroundColor: '#000', textColor: '#fff', borderColor: '#000' },
+        learnMore: { text: '', backgroundColor: '#000', textColor: '#fff', borderColor: '#000' },
+        visitWebsite: { text: '', backgroundColor: '#000', textColor: '#fff', borderColor: '#000' },
+        icons: []
+    },
+    colors: { textColor: '#fff', contentBlockBackground: '#000', hoverShadow: 'rgba(0,0,0,0.4)' }
+};
 ---
 
 <section class="hero">
@@ -124,6 +137,22 @@ const {projectData} = Astro.props;
     </div>
 </section>
 
+<!-- GSAP + ScrollTrigger client script: animates border alpha only -->
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.to(".div1", {
+        scrollTrigger: {
+            trigger:".parent",
+            pin:".div4",
+            start: "top top",
+            endTrigger: ".div1",
+            markers: true
+        }
+    })
+</script>
 
 <style define:vars={{
     textColor: projectData.colors.textColor,
@@ -172,17 +201,14 @@ const {projectData} = Astro.props;
     }
 
     .div3 {
-        border-top: 2px dashed rgba(153, 153, 153, 0.5); /* Set dotted top border */
-        //height: 100px;
-        border-bottom: 2px dashed rgba(153, 153, 153, 0.5); /* Set dotted top border */
-
+        /* use the animated CSS custom property for alpha */
+        border-top: 2px dashed rgba(153, 153, 153, var(--border-alpha)); /* Set dashed top border */
+        border-bottom: 2px dashed rgba(153, 153, 153, var(--border-alpha)); /* Set dashed bottom border */
     }
 
     .div2 {
-        border-left: 2px dashed rgba(153, 153, 153, 0.5); /* Set dotted top border */
-        //height: 100px;
-        border-right: 2px dashed rgba(153, 153, 153, 0.5); /* Set dotted top border */
-
+        border-left: 2px dashed rgba(153, 153, 153, var(--border-alpha)); /* Set dashed left border */
+        border-right: 2px dashed rgba(153, 153, 153, var(--border-alpha)); /* Set dashed right border */
     }
 
     .div1 {
@@ -244,6 +270,8 @@ const {projectData} = Astro.props;
         cursor: pointer;
         transition: all 0.3s ease;
         word-wrap: break-word;
+        /* keep buttons out of layout paint churn */
+        will-change: transform;
     }
 
     .gh-btn {
