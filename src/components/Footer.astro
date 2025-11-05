@@ -2,10 +2,10 @@
 // Footer.astro
 ---
 
-<footer class="relative w-full w-full overflow-hidden pb-8 md:pb-16">
+<footer class="relative w-full w-full overflow-hidden m-0 p-0">
   <div class="hidden md:block w-[1438.01px] h-0 outline outline-1 outline-offset-[-0.50px] outline-white mx-auto"></div>
 
-  <div class="relative z-10 hidden md:flex flex-col min-h-[60vh] pb-8    ">
+  <div class="relative z-10 hidden md:flex flex-col min-h-[50vh] pb-8    ">
     <div class="flex-grow flex items-start justify-between px-16 pt-6">
       <div class="flex-shrink-0">
         <div class="text-yellow-50 text-xl font-bold font-['PolySans_Trial'] leading-tight">
@@ -205,13 +205,13 @@
         </div>
     </div>
     <!-- Footer Background -->
-    <div class="hidden md:flex w-full justify-center items-end mt-0 pb-4">
+    <div class="hidden md:flex w-full justify-center items-end mt-0">
       <img src="/footer/footer-background.svg" alt="Footer Background" class="w-full max-w-none h-auto object-contain" style="min-width:100vw;" />
     </div>
   </div>
   
   <!-- Phone Screen Version -->
-  <div class="block md:hidden relative w-full h-auto overflow-hidden min-h-[1100px] pb-24">
+  <div class="block md:hidden relative w-full h-auto overflow-hidden min-h-[1100px] pb-0">
 
     <!-- Divider line -->
     <div class="w-full h-0 outline outline-1 outline-offset-[-0.5px] outline-white mx-auto"></div>
@@ -325,8 +325,17 @@
           <img src="/footer/pixel-heart.svg" alt="pixel heart" class="w-5 h-5" />
           <span class="text-white text-xs font-['PolySans_Trial']">crafted with love by ACM-VIT</span>
         </div>
+        <div class="mt-6 text-center">
+          <div class="text-neutral-400 text-[160px] sm:text-[200px] font-bold font-['PolySans_Trial'] leading-none opacity-100 select-none pointer-events-none" style="line-height:0.8;">
+            acm
+          </div>
+        </div>
+        
       </div>
+      
     </div>
+
+    
 
     <!-- Footer Background (mobile) -->
     <div class="w-full flex justify-center items-end mt-4">
