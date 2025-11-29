@@ -3,17 +3,15 @@ import ProjectScreen from "../components/ProjectScreen.astro";
 import Domains from "../components/Domains.astro";
 import DomainsPhone from "../phoneComponents/Domains_Phone.astro";
 import Layout from "../layouts/Layout.astro";
-import Pattern from "./pattern.astro";
 import Gallery from "../components/Gallery.astro";
-import BoardMemberCardSingular from "../components/BoardMemberCardSingular.astro";
-import Board from "./Board.astro";
+import Board from "../components/Board.astro";
 import "../styles/globals.css";
 import PartnerCasetteSingular from "../components/PartnerCasetteSingular.astro";
 import Partners from "../components/Partners.astro";
 import AcmWMotto from "../components/AcmWMotto.astro";
 import AcmWContent from "../components/AcmWContent.astro";
 import { projectsData } from "../data/projectsData.ts";
-import Events from "../components/Events.astro";
+import Events from "../components/SWork.astro";
 import ContactUS from "../components/ContactUs.astro";
 import ContactUSPhone from "../phoneComponents/ContactUs_Phone.astro";
 import AcmWBento from "../components/AcmWBento.astro";
@@ -36,6 +34,8 @@ import Blogs from "../components/Blogs.astro";
     </div>
     <BecauseTechMatters />
   </section>
+
+  
 
   <section id="about" class="page-section">
     <div class="hidden md:block">
@@ -64,10 +64,14 @@ import Blogs from "../components/Blogs.astro";
     </div>
   </section>
 
+  <section id="events" class="page-section">
+    <Events />
+  </section>
+
   <section id="acm-w" class="page-section">
     <AcmWMotto />
     <AcmWContent />
-    <!-- <AcmWBento /> -->
+    <AcmWBento />
   </section>
 
   <Board />
