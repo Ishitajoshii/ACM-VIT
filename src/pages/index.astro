@@ -26,15 +26,13 @@ import Blogs from "../components/Blogs.astro";
 ---
 
 <Layout>
-  <section id="home" class="page-section">
+  <section id="home" class="page-section relative">
     <div class="relative h-screen w-screen">
       <Hero />
-      <LegendPins />
     </div>
+    <LegendPins />
     <BecauseTechMatters />
   </section>
-
-  
 
   <section id="about" class="page-section">
     <div class="hidden md:block">
@@ -101,11 +99,7 @@ import Blogs from "../components/Blogs.astro";
     </div>
   </section>
 
-  <!-- Anchor placeholder for events if content is not displayed -->
-  <section id="events" class="page-section"></section>
-
   <Footer />
-  <!-- <Events /> -->
 </Layout>
 
 <style>
