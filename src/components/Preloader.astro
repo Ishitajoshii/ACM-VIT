@@ -19,47 +19,50 @@ import { Image } from "astro:assets";
   const progressFill = document.querySelector(".progress-fill") as HTMLElement;
 
   if (preloader && progressFill) {
-    // Initial state
-    gsap.set(preloader, { autoAlpha: 1 });
-    gsap.set(progressFill, { width: "0%" });
+    const preloaderShown = sessionStorage.getItem("preloaderShown");
 
-    // Start loading
-    const imgLoad = imagesLoaded(document.body, { background: true });
-    const totalImages = imgLoad.images.length;
-    let loadedImages = 0;
-
-    // Fallback if no images or very fast load
-    if (totalImages === 0) {
-      finishLoading();
-    }
-
-    imgLoad.on("progress", (instance, image) => {
-      loadedImages++;
-      const percentage = (loadedImages / totalImages) * 100;
-      gsap.to(progressFill, {
-        width: `${percentage}%`,
-        duration: 0.2,
-        ease: "power1.out",
-      });
-    });
-
-    imgLoad.on("always", () => {
-      finishLoading();
-    });
-
-    // Safety timeout in case something hangs
-    setTimeout(() => {
-      if (preloader.style.display !== "none") {
+    if (preloaderShown) {
+      preloader.style.display = "none";
+    } else {
+      gsap.set(preloader, { autoAlpha: 1 });
+      gsap.set(progressFill, { width: "0%" });
+      const imgLoad = imagesLoaded(document.body, { background: true });
+      const totalImages = imgLoad.images.length;
+      let loadedImages = 0;
+      if (totalImages === 0) {
         finishLoading();
       }
-    }, 5000); // 5 seconds max wait
+
+      imgLoad.on("progress", (instance, image) => {
+        loadedImages++;
+        const percentage = (loadedImages / totalImages) * 100;
+        gsap.to(progressFill, {
+          width: `${percentage}%`,
+          duration: 0.2,
+          ease: "power1.out",
+        });
+      });
+
+      imgLoad.on("always", () => {
+        finishLoading();
+      });
+      setTimeout(() => {
+        if (preloader.style.display !== "none") {
+          finishLoading();
+        }
+      }, 5000); // 5 seconds max wait
+    }
   }
 
   function finishLoading() {
     const preloader = document.getElementById("preloader");
     if (!preloader) return;
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+      onComplete: () => {
+        sessionStorage.setItem("preloaderShown", "true");
+      },
+    });
 
     tl.to(".progress-bar", {
       opacity: 0,
