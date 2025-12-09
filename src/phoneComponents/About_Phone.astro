@@ -6,7 +6,7 @@
 <div class="w-full overflow-hidden">
   <!-- About Section 1 -->
   <section
-    class="about-section-phone section-1 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-acmvit.jpeg')] bg-center bg-cover bg-no-repeat"
+    class="about-section-phone section-1 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-acmvit.jpeg')] bg-center bg-cover bg-no-repeat radial-overlay"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -37,7 +37,7 @@
 
   <!-- About Section 2 -->
   <section
-    class="about-section-phone section-2 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-vit.jpeg')] bg-center bg-cover bg-no-repeat"
+    class="about-section-phone section-2 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-vit.jpeg')] bg-center bg-cover bg-no-repeat radial-overlay"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -68,7 +68,7 @@
 
   <!-- About Section 3 -->
   <section
-    class="about-section-phone section-3 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-acm.jpeg')] bg-center bg-cover bg-no-repeat"
+    class="about-section-phone section-3 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-[url('/about/about-acm.jpeg')] bg-center bg-cover bg-no-repeat radial-overlay"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -92,6 +92,28 @@
     </div>
   </section>
 </div>
+
+<style>
+  .radial-overlay {
+    position: relative;
+  }
+  .radial-overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(
+      circle at 30% 50%,
+      rgba(26, 26, 26, 0.6) 0%,
+      rgba(6, 6, 6, 0.85) 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+  .radial-overlay > * {
+    position: relative;
+    z-index: 1;
+  }
+</style>
 
 <script>
   import { gsap } from "gsap";
