@@ -1,11 +1,11 @@
 // Data/domainData.ts
 export const domainConfigs = {
-    app: {
-        title: "APP",
+    tech: {
+        title: "TECH",
         description: "We build tools that people actually use in a world driven by digital experiences. From frontend finesse to backend logic, we focus on developing full-stack applications that solve real problems. We collaborate on real-world projects, explore the latest technologies, and grow as developers through hands-on experience. It's where curiosity turns into code and ideas turn into seamless digital experiences.",
-        themeColor: "app",
-        cassetteSvg: "/Cassette_App.svg",
-        buttonText: "PROJECTS",
+        themeColor: "tech",
+        cassetteSvg: "/Cassette_Tech.svg",
+        buttonText: "Areas of Interest (AOIs)",
         techIcons: [
             { src: "/domains/app/android.svg", alt: "Android" },
             { src: "/domains/app/dart.svg", alt: "Dart" },
@@ -14,7 +14,28 @@ export const domainConfigs = {
             { src: "/domains/app/kotlin.svg", alt: "Kotlin" },
             { src: "/domains/app/reactjs.svg", alt: "React Native" },
             { src: "/domains/app/swift.svg", alt: "Swift" },
-            { src: "/domains/app/typescript.svg", alt: "TypeScript" }
+            { src: "/domains/app/typescript.svg", alt: "TypeScript" },
+            { src: "/domains/web/cloudflare.svg", alt: "Cloudflare" },
+            { src: "/domains/web/cockroachdb 1.svg", alt: "CockroachDB" },
+            { src: "/domains/web/docker.svg", alt: "Docker" },
+            { src: "/domains/web/go-gopher-svgrepo-com 1.svg", alt: "Go" },
+            { src: "/domains/web/Group.svg", alt: "Group" },
+            { src: "/domains/web/nextjs2.svg", alt: "Next.js" },
+            { src: "/domains/web/nodejs.svg", alt: "Node.js" },
+            { src: "/domains/web/npm2.svg", alt: "npm" },
+            { src: "/domains/web/postgresql.svg", alt: "PostgreSQL" },
+            { src: "/domains/web/postman.svg", alt: "Postman" },
+            { src: "/domains/web/prisma.svg", alt: "Prisma" },
+            { src: "/domains/web/redis.svg", alt: "Redis" },    
+            { src: "/domains/web/tailwindcss.svg", alt: "TailwindCSS" },
+            { src: "/domains/web/typescript.svg", alt: "TypeScript" }
+        ],
+        aois: [
+            { src: "/AOIs/tech/app.svg", alt: "App Development" },
+            { src: "/AOIs/tech/foss.svg", alt: "FOSS" },
+            { src: "/AOIs/tech/gamedev.svg", alt: "Game Dev" },
+            { src: "/AOIs/tech/web.svg", alt: "Web Development" },
+            { src: "/AOIs/tech/devops.svg", alt: "DevOps" }
         ]
     },
     cc: {
@@ -35,7 +56,7 @@ export const domainConfigs = {
         description: "We craft visual experiences that bring our ideas and events to life - from UI/UX design and motion graphics to social media posts and video edits. With a focus on aesthetics, usability, and storytelling, we shape how the world sees ACM. Whether it's building brand identity or designing user-first interfaces, we blend art with purpose to create meaningful designs. Every pixel, frame, and layout is intentional, because great design isn't just seen, it's felt.",
         themeColor: "design",
         cassetteSvg: "/Cassette_Design.svg",
-        buttonText: "PROJECTS",
+        buttonText: "Areas of Interest (AOIs)",
         techIcons: [
             { src: "/domains/design/ae.svg", alt: "AE" },
             { src: "/domains/design/ai.svg", alt: "AI" },
@@ -43,29 +64,13 @@ export const domainConfigs = {
             { src: "/domains/design/final-cut-pro-new 1.svg", alt: "FinalCut" },
             { src: "/domains/design/ps.svg", alt: "PS" },
             { src: "/domains/design/blender.svg", alt: "Blender" }
-        ]
-    },
-    web: {
-        title: "WEB",
-        description: "We create digital experiences that combine purpose with performance, ensuring every interaction feels seamless and intentional. From dynamic frontends to robust backend systems, everything we build is smooth, efficient, and reliable. We prioritize accessibility, performance, and scalability, working together to turn ideas into impactful solutions. It's not just about building websites, it's about creating systems that deliver consistent and meaningful user experiences.",
-        themeColor: "web",
-        cassetteSvg: "/Cassette_Web.svg",
-        buttonText: "PROJECTS",
-        techIcons: [
-            { src: "/domains/web/cloudflare.svg", alt: "Cloudflare" },
-            { src: "/domains/web/cockroachdb 1.svg", alt: "CockroachDB" },
-            { src: "/domains/web/docker.svg", alt: "Docker" },
-            { src: "/domains/web/go-gopher-svgrepo-com 1.svg", alt: "Go" },
-            { src: "/domains/web/Group.svg", alt: "Group" },
-            { src: "/domains/web/nextjs2.svg", alt: "Next.js" },
-            { src: "/domains/web/nodejs.svg", alt: "Node.js" },
-            { src: "/domains/web/npm2.svg", alt: "npm" },
-            { src: "/domains/web/postgresql.svg", alt: "PostgreSQL" },
-            { src: "/domains/web/postman.svg", alt: "Postman" },
-            { src: "/domains/web/prisma.svg", alt: "Prisma" },
-            { src: "/domains/web/redis.svg", alt: "Redis" },    
-            { src: "/domains/web/tailwindcss.svg", alt: "TailwindCSS" },
-            { src: "/domains/web/typescript.svg", alt: "TypeScript" }
+        ],
+        aois: [
+            { src: "/AOIs/design/3D.svg", alt: "3D Design" },
+            { src: "/AOIs/design/illustrations.svg", alt: "Illustrations" },
+            { src: "/AOIs/design/motion-graphics.svg", alt: "Motion Graphics" },
+            { src: "/AOIs/design/uiux.svg", alt: "UI/UX" },
+            { src: "/AOIs/design/video-editing.svg", alt: "Video Editing" }
         ]
     },
     research: {
@@ -73,7 +78,7 @@ export const domainConfigs = {
         description: "Curiosity, collaboration, and a passion for exploration drive everything we do. We explore cutting-edge technologies, work across disciplines, and drive innovation through hands-on mentorship and real-world problem solving. From crafting thought-provoking challenges for our flagship events to publishing insightful blogs, we turn questions into breakthroughs. We also host the System's Reading Group (SRG), a peer-led initiative to deep-dive into foundational research. With interests spanning AI, cybersecurity, quantum computing, and more, we're always pushing boundaries through learning and discovery.",
         themeColor: "research",
         cassetteSvg: "/Cassette_Research.svg",
-        buttonText: "AREAS OF INTEREST",
+        buttonText: "Areas of Interest (AOIs)",
         techIcons: [
             { src: "/domains/research/icons8-google-colab 1.svg", alt: "Collab" },
             { src: "/domains/research/icons8-burp-suite 1.svg", alt: "BurpSuite" },
@@ -84,6 +89,13 @@ export const domainConfigs = {
             { src: "/domains/research/Pandas 1.svg", alt: "Pandas" },
             { src: "/domains/research/python.svg", alt: "Python" },
             { src: "/domains/research/qiskit 1.svg", alt: "Qiskit" }
+        ],
+        aois: [
+            { src: "/AOIs/research/aiml.svg", alt: "AI/ML" },
+            { src: "/AOIs/research/bioinfo.svg", alt: "Bioinformatics" },
+            { src: "/AOIs/research/blockchain.svg", alt: "Blockchain" },
+            { src: "/AOIs/research/cybersec.svg", alt: "Cybersecurity" },
+            { src: "/AOIs/research/iot.svg", alt: "IoT" }
         ]
     },
     management: {

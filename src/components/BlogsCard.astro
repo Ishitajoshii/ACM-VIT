@@ -1,18 +1,22 @@
 ---
 interface Props {
   bgurl: string;
+  link: string;
 }
 
-const { bgurl } = Astro.props;
+const { bgurl, link } = Astro.props;
 ---
 
-<div
-  class="relative w-[80vw] h-[50vw] max-h-[50vw] sm:w-[40vw] sm:h-[25vw] sm:max-h-[25vw] lg:w-[22vw] lg:h-[15.625vw] lg:max-h-[15.625vw] rounded-lg bg-white overflow-hidden flex items-end justify-center"
+<a
+  href={link}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="relative w-[80vw] h-[50vw] max-h-[50vw] sm:w-[40vw] sm:h-[25vw] sm:max-h-[25vw] lg:w-[22vw] lg:h-[15.625vw] lg:max-h-[15.625vw] rounded-lg bg-white overflow-hidden flex items-end justify-center cursor-pointer transition-transform duration-300 hover:scale-105"
 >
   <!-- Background Pattern -->
   <div
     class="absolute inset-0 pointer-events-none z-0"
-    style={`background-image: url('${bgurl}'); background-size: contain; background-position: center; background-repeat: no-repeat;`}
+    style={`background-image: url('${bgurl}'); background-size: cover; background-position: center; background-repeat: no-repeat;`}
   >
   </div>
   <div
@@ -62,4 +66,4 @@ const { bgurl } = Astro.props;
       font-display: swap;
     }
   </style>
-</div>
+</a>
