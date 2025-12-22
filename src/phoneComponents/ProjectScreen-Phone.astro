@@ -1,5 +1,6 @@
 ---
 import Cassette from "../components/Cassette.astro";
+import { getAssetUrl } from "../utils/cdn";
 
 export interface Props {
   projects: Array<{
@@ -103,7 +104,9 @@ const { projects = [] } = Astro.props;
                 aria-label={projectData.buttons.icons[0].type}
               >
                 <img
-                  src={`/${projectData.buttons.icons[0].type}-icon.svg`}
+                  src={getAssetUrl(
+                    `/${projectData.buttons.icons[0].type}-icon.svg`
+                  )}
                   alt={projectData.buttons.icons[0].type}
                   width="20"
                   style={`filter: brightness(0) saturate(100%) invert(${projectData.buttons.icons[0].iconColor === "#FEFCD9" ? "96%" : "0%"});`}

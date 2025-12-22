@@ -1,5 +1,6 @@
 ---
 import Cassette from "./Cassette.astro";
+import { getAssetUrl } from "../utils/cdn";
 
 export interface Props {
   projects: Array<{
@@ -59,7 +60,7 @@ const { projects = [] } = Astro.props;
         <div class="parent grid grid-cols-9 grid-rows-5 gap-0 h-full w-full">
           <div class="div1 col-start-1 col-end-6 row-start-1 row-end-6 flex items-center justify-center">
             <Cassette
-              overlaySrc={projectData.cassette.src}
+              overlaySrc={getAssetUrl(projectData.cassette.src)}
               alt={projectData.cassette.alt}
               color={projectData.buttons.primary.backgroundColor}
             />
@@ -115,7 +116,7 @@ const { projects = [] } = Astro.props;
                   aria-label={icon.type}
                 >
                   <img
-                    src={`/${icon.type}-icon.svg`}
+                    src={getAssetUrl(`/${icon.type}-icon.svg`)}
                     alt={icon.type}
                     width="24"
                     style={`filter: brightness(0) saturate(100%) invert(${icon.iconColor === "#FEFCD9" ? "96%" : "0%"});`}

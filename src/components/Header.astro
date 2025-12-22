@@ -54,16 +54,16 @@
             </li>
             <li>
               <a
-                href="#projects"
+                href="#events"
                 class="nav-link inline-block px-3 py-1 hover:text-white transition-colors"
-                >PROJECTS</a
+                >EVENTS</a
               >
             </li>
             <li>
               <a
-                href="#events"
+                href="#projects"
                 class="nav-link inline-block px-3 py-1 hover:text-white transition-colors"
-                >EVENTS</a
+                >PROJECTS</a
               >
             </li>
             <li>
@@ -177,8 +177,8 @@
               [
                 "about",
                 "domains",
-                "projects",
                 "events",
+                "projects",
                 "acm-w",
                 "blogs",
                 "partners",
@@ -216,7 +216,7 @@
 
   /* Dynamic Mode Styles */
   .header-pill.dynamic-mode {
-    width: 112px !important; /* w-28 */
+    width: 112px; /* w-28 */
     background-color: #f95f4a !important;
     border-color: #fefcd9;
   }
@@ -451,11 +451,58 @@
           pill.classList.remove("pink-mode");
         }
 
-        if (dynamicTitle) dynamicTitle.textContent = sectionId;
+        if (dynamicTitle) {
+          let text = sectionId;
+          let isLongText = false;
+
+          if (sectionId.startsWith("community-")) {
+            // Format: Community: Outreach
+            const sub = sectionId.replace("community-", "");
+            let displaySub = sub;
+            if (sub === "outreach") displaySub = "Outreach";
+            else if (sub === "sdg") displaySub = "SDG";
+            else if (sub === "conduct") displaySub = "Code of Conduct";
+            else if (sub === "speaker") displaySub = "Speakers";
+
+            text = `Community: ${displaySub}`;
+            isLongText = true;
+          }
+
+          dynamicTitle.textContent = text;
+          dynamicTitle.style.whiteSpace = "nowrap";
+
+          if (isLongText) {
+            // Measure text width
+            const font = "16px PolySans_Trial";
+            const tempSpan = document.createElement("span");
+            tempSpan.style.fontFamily = "'PolySans_Trial', sans-serif";
+            tempSpan.style.fontSize = "16px";
+            tempSpan.style.fontWeight = "300";
+            tempSpan.style.textTransform = "uppercase";
+            tempSpan.style.visibility = "hidden";
+            tempSpan.style.position = "absolute";
+            tempSpan.style.whiteSpace = "nowrap";
+            tempSpan.textContent = text;
+            document.body.appendChild(tempSpan);
+            const width = tempSpan.offsetWidth;
+            document.body.removeChild(tempSpan);
+
+            const totalWidth = width + 55;
+
+            pill.style.setProperty("width", `${totalWidth}px`);
+            pill.style.setProperty("padding-left", "0px"); // Reset to avoid double padding if width includes it? Actually my logic sets width including padding.
+            // Wait, transition: width 0.3s. If I set width explicit, it should animate.
+          } else {
+            pill.style.setProperty("width", "112px");
+          }
+        }
         hideBlob();
       } else {
         pill.classList.remove("dynamic-mode");
         pill.classList.remove("pink-mode");
+        // Clear inline styles so it returns to original CSS/auto width
+        pill.style.removeProperty("width");
+        pill.style.removeProperty("padding-left");
       }
     }
 
@@ -479,15 +526,34 @@
             // Enter Dynamic Mode
             setDynamicMode(true, id);
           } else {
-            // Exit Dynamic Mode
-            setDynamicMode(false);
+            // ID Mapping for internal sections
+            const idMapping = {
+              work: "events",
+              "igniting-minds-section": "about",
+              "projects-intro": "projects",
+              "community-outreach": "community",
+              "community-sdg": "community",
+              "community-conduct": "community",
+              "community-speaker": "community",
+            };
+            const mappedId = idMapping[id] || id;
 
-            // Update blob for normal sections
-            const activeLink = document.querySelector(
-              `.nav-desktop .nav-link[href="#${id}"]`
-            );
-            if (activeLink) {
-              updateBlob(activeLink);
+            // Check if it's a specific community subsection
+            if (id.startsWith("community-")) {
+              setDynamicMode(true, id);
+            } else {
+              // Exit Dynamic Mode
+              setDynamicMode(false);
+
+              // Update blob for normal sections
+              const activeLink = document.querySelector(
+                `.nav-desktop .nav-link[href="#${mappedId}"]`
+              );
+              if (activeLink) {
+                updateBlob(activeLink);
+              } else {
+                hideBlob();
+              }
             }
           }
         }
