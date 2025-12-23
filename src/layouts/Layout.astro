@@ -68,47 +68,87 @@ const description =
         <slot />
       </main>
     </div>
-    <script>
-      import { gsap } from "gsap";
-      import { ScrollTrigger } from "gsap/ScrollTrigger";
+  <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-      gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger);
 
-      ScrollTrigger.config({
-        limitCallbacks: true,
-        ignoreMobileResize: true,
-      });
+  ScrollTrigger.config({
+    limitCallbacks: true,
+    ignoreMobileResize: true,
+  });
 
-      let refreshTimer: number | null = null;
-      const scheduleRefresh = () => {
-        if (refreshTimer) return;
-        refreshTimer = window.setTimeout(() => {
-          refreshTimer = null;
-          ScrollTrigger.refresh();
-        }, 200);
-      };
+  const getVP = () => {
+    const vv = window.visualViewport;
+    const w = Math.round(vv?.width ?? window.innerWidth);
+    const h = Math.round(vv?.height ?? window.innerHeight);
+    return { w, h };
+  };
 
-      const kickRefresh = () => {
-        scheduleRefresh();
-        window.setTimeout(scheduleRefresh, 700);
-      };
+  let last = getVP();
+  let rafId = 0;
+  let pending = false;
 
-      if (document.readyState === "complete") {
-        kickRefresh();
-      } else {
-        window.addEventListener("load", kickRefresh);
-      }
+  const shouldRefresh = () => {
+    const now = getVP();
 
-      window.addEventListener("resize", scheduleRefresh);
-      window.addEventListener("orientationchange", scheduleRefresh);
+    const widthChanged = now.w !== last.w;
 
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(scheduleRefresh);
-      }
+    const bigHeightChange = Math.abs(now.h - last.h) >= 120;
 
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", scheduleRefresh);
-      }
+    if (widthChanged || bigHeightChange) {
+      last = now;
+      return true;
+    }
+    return false;
+  };
+
+  const doRefresh = () => {
+    pending = false;
+    if (!shouldRefresh()) return;
+
+    ScrollTrigger.refresh(true);
+  };
+
+  const scheduleRefresh = () => {
+    if (pending) return;
+    pending = true;
+
+    cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(doRefresh);
+  };
+
+  const kickRefresh = () => {
+    scheduleRefresh();
+    setTimeout(scheduleRefresh, 250);
+    setTimeout(scheduleRefresh, 900);
+  };
+
+  if (document.readyState === "complete") {
+    kickRefresh();
+  } else {
+    window.addEventListener("load", kickRefresh, { once: true });
+  }
+
+  window.addEventListener("resize", scheduleRefresh, { passive: true });
+
+  window.addEventListener(
+    "orientationchange",
+    () => {
+      last = { w: 0, h: 0 } as any;
+      scheduleRefresh();
+    },
+    { passive: true }
+  );
+
+  if (document.fonts?.ready) {
+    document.fonts.ready.then(scheduleRefresh);
+  }
+
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", scheduleRefresh, { passive: true });
+  }
     </script>
   </body>
 </html>
