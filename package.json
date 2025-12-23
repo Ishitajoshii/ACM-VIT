@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node updateCDN.js",
     "preview": "astro preview",
     "astro": "astro",
     "deploy:cdn": "node scripts/upload-r2.mjs"
@@ -21,10 +22,12 @@
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {
+    "@aws-sdk/client-cloudfront": "^3.948.0",
     "@aws-sdk/client-s3": "^3.948.0",
     "@types/imagesloaded": "^4.1.7",
     "dotenv": "^17.2.3",
     "mime-types": "^3.0.2",
+    "p-limit": "^6.2.0",
     "sass-embedded": "^1.93.3"
   }
 }
