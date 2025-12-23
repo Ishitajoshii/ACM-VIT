@@ -14,6 +14,11 @@ html {
   scroll-margin-top: 84px;
 }
 
+/* Events needs full-bleed alignment for the mask start state */
+#events.page-section {
+  scroll-margin-top: 0;
+}
+
 /* Global Selection Style */
 ::selection {
   background: #f95f4a;
@@ -100,4 +105,3 @@ html {
   font-style: normal;
   font-display: swap;
 }
-

@@ -70,6 +70,19 @@ import { getAssetUrl } from "../utils/cdn";
   </a>
 </div>
 
+<style>
+  @media (max-width: 768px) {
+    .legend-pin {
+      display: none;
+    }
+  }
+
+  body.mobile-menu-open .legend-pins-wrapper {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -3,10 +3,10 @@
 ---
 
 <header
-  class="fixed top-5 left-0 right-0 z-50 w-full px-4 py-2 pointer-events-none"
+  class="site-header fixed top-5 left-0 right-0 z-50 w-full px-4 py-2 pointer-events-none"
 >
   <div
-    class="relative max-w-4xl mx-auto flex justify-center pointer-events-auto"
+    class="header-inner relative max-w-4xl mx-auto flex justify-center pointer-events-auto"
   >
     <nav>
       <!-- Desktop nav -->
@@ -335,6 +335,20 @@
   }
 
   @media (max-width: 520px) {
+    .site-header {
+      top: auto;
+      bottom: 18px;
+    }
+    .header-inner {
+      justify-content: center;
+    }
+    #mobile-menu-close {
+      top: auto;
+      right: auto;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
     .nav-desktop {
       display: none;
     }
@@ -364,8 +378,10 @@
     function toggleMobileMenu(show) {
       if (show) {
         mobileMenuOverlay.classList.remove("translate-x-full");
+        document.body.classList.add("mobile-menu-open");
       } else {
         mobileMenuOverlay.classList.add("translate-x-full");
+        document.body.classList.remove("mobile-menu-open");
       }
     }
 

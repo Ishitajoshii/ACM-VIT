@@ -694,6 +694,10 @@ while (i < projects.length) {
         tl.kill();
       }
 
+      const introDuration = 5.0;
+      const cardsDelay = 0.35;
+      const cardsStart = introDuration + cardsDelay;
+
       tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
@@ -711,13 +715,13 @@ while (i < projects.length) {
       tl.fromTo(
         mask.el,
         { scale: 1 },
-        { scale: mask.maxScale, duration: 0.75, ease: "power4.in" },
+        { scale: mask.maxScale, duration: introDuration, ease: "power4.in" },
         0
       );
       tl.fromTo(
         scene,
         { scale: 0.75 },
-        { scale: 1, duration: 0.75, ease: "power3.in" },
+        { scale: 1, duration: introDuration, ease: "power3.in" },
         0
       );
 
@@ -725,7 +729,11 @@ while (i < projects.length) {
         tl.fromTo(
           container,
           { clipPath: "inset(0 1rem)" },
-          { clipPath: "inset(0 0rem)", duration: 0.75, ease: "power3.in" },
+          {
+            clipPath: "inset(0 0rem)",
+            duration: introDuration,
+            ease: "power3.in",
+          },
           0
         );
       }
@@ -734,19 +742,26 @@ while (i < projects.length) {
         this,
         { pointsProgress: 0 },
         { pointsProgress: 1, duration: 1, ease: "power4.inOut" },
-        0
+        introDuration
       );
       tl.fromTo(
         this,
         { state: 0 },
         { state: 1, duration: 0.75, ease: "power4.in" },
-        0
+        introDuration
       );
+      const cardsDuration = 0.9;
+      const cardsStagger = 0.32;
       tl.fromTo(
         worksEl,
         { attr: { progress: 1 } },
-        { attr: { progress: -1 }, ease: "slow(0.15, 0.6)", stagger: 0.25 },
-        0.75
+        {
+          attr: { progress: -1 },
+          duration: cardsDuration,
+          ease: "slow(0.15, 0.6)",
+          stagger: cardsStagger,
+        },
+        cardsStart
       );
       tl.fromTo(
         this,
@@ -756,7 +771,7 @@ while (i < projects.length) {
           duration: tl.totalDuration(),
           ease: "power1.out",
         },
-        0.75
+        cardsStart
       );
       tl.fromTo(
         this,
@@ -1155,7 +1170,7 @@ while (i < projects.length) {
         z-index: 2;
         transform: rotateY(calc(var(--progress) * -20deg))
           translate3d(
-            calc(var(--progress) * (50vw + 100%) - 50%),
+            calc(var(--progress) * (80vw + 200%) - 50%),
             calc(var(--y) * 50% - 50%),
             calc(var(--progress) * var(--progress) * -5rem)
           )
@@ -1166,7 +1181,7 @@ while (i < projects.length) {
         @media only screen and (max-width: 987px) {
           transform: rotateY(calc(var(--progress) * -20deg))
             translate3d(
-              calc(var(--progress) * (50vw + 100%) - 50%),
+              calc(var(--progress) * (60vw + 120%) - 50%),
               calc(var(--y) * 50% - 50%),
               calc(var(--progress) * var(--progress) * -5rem)
             );
@@ -1176,7 +1191,7 @@ while (i < projects.length) {
           only screen and (max-width: 576px) {
           /* Simplified mobile transform: Remove 3D rotation, simpler translation */
           transform: translate3d(
-              calc(var(--progress) * (50vw + 100%) - 50%),
+              calc(var(--progress) * (60vw + 120%) - 50%),
               calc(var(--y) * 100% - 50%),
               0
             )
