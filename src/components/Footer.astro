@@ -1,8 +1,9 @@
 ---
 // Footer.astro
+import { getAssetUrl } from "../utils/cdn";
 ---
 
-<footer class="relative w-full w-full overflow-hidden m-0 p-0">
+<footer id="footer" class="relative w-full w-full overflow-hidden m-0 p-0">
   <div
     class="hidden md:block w-[1438.01px] h-0 outline outline-1 outline-offset-[-0.50px] outline-white mx-auto"
   >
@@ -41,7 +42,7 @@
             rel="noopener noreferrer"
           >
             <img
-              src="/footer/VIT-Map.png"
+              src={getAssetUrl("/footer/VIT-Map.png")}
               alt="VIT Map"
               class="w-52 h-36 object-cover rounded-lg shadow-lg border border-zinc-700"
             />
@@ -66,19 +67,23 @@
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#about"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               ACM-VIT
             </a>
             <a
-              href="#"
+              href="https://vit.ac.in"
+              target="_blank"
+              rel="noopener noreferrer"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               VIT
             </a>
             <a
-              href="#"
+              href="https://www.acm.org"
+              target="_blank"
+              rel="noopener noreferrer"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               ACM
@@ -97,37 +102,37 @@
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               App
             </a>
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               competitive coding
             </a>
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               design
             </a>
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               management
             </a>
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               research
             </a>
             <a
-              href="#"
+              href="#domains"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               web
@@ -146,49 +151,49 @@
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               Code2CREATE
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               CRYPTIC HUNT
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               REVERSE CODING
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               CODEX CRYPTUM
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               FORKTOBER
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               THE TINY HACK
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               APPTITUDE
             </a>
             <a
-              href="#"
+              href="#events"
               class="self-stretch text-[#f95f4a] text-base font-light font-['PolySans_Trial'] uppercase hover:text-red-400 transition-colors"
             >
               MORE
@@ -207,43 +212,43 @@
             class="self-stretch h-44 flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               ACMONE
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               CLI-RPG
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               EXAMCOOKER
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               CLITOP
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               LOCALHOST
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               OS
             </a>
             <a
-              href="#"
+              href="#projects"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               UNIPOOL
@@ -262,13 +267,13 @@
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#acm-w"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               about w
             </a>
             <a
-              href="#"
+              href="#acm-w"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               events
@@ -287,31 +292,31 @@
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
             <a
-              href="#"
+              href="#team"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               team
             </a>
             <a
-              href="#"
+              href="#blogs"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               blogs
             </a>
             <a
-              href="#"
+              href="#partners"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               partners
             </a>
             <a
-              href="#"
+              href="#gallery"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               gallery
             </a>
             <a
-              href="#"
+              href="#contact"
               class="self-stretch text-white text-base font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >
               contact us
@@ -337,7 +342,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Facebook.svg"
+            src={getAssetUrl("/footer/Facebook.svg")}
             alt="Facebook"
             class="w-14 h-12 hover:scale-110 transition-transform"
           /></a
@@ -348,7 +353,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Twitter.svg"
+            src={getAssetUrl("/footer/Twitter.svg")}
             alt="Twitter"
             class="w-10 h-8 hover:scale-110 transition-transform"
           /></a
@@ -359,7 +364,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Instagram.svg"
+            src={getAssetUrl("/footer/Instagram.svg")}
             alt="Instagram"
             class="w-14 h-12 hover:scale-110 transition-transform"
           /></a
@@ -370,7 +375,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Medium.svg"
+            src={getAssetUrl("/footer/Medium.svg")}
             alt="Medium"
             class="w-14 h-12 hover:scale-110 transition-transform"
           /></a
@@ -381,7 +386,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Linkedin.svg"
+            src={getAssetUrl("/footer/Linkedin.svg")}
             alt="Linkedin"
             class="w-14 h-12 hover:scale-110 transition-transform"
           /></a
@@ -392,14 +397,18 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/youtube icon.png"
+            src={getAssetUrl("/footer/youtube icon.png")}
             alt="YouTube"
             class="w-7 h-7 rounded hover:scale-110 transition-transform"
           /></a
         >
       </div>
       <div class="flex items-center gap-2">
-        <img src="/footer/pixel-heart.svg" alt="pixel heart" class="w-6 h-6" />
+        <img
+          src={getAssetUrl("/footer/pixel-heart.svg")}
+          alt="pixel heart"
+          class="w-6 h-6"
+        />
         <span
           class="text-neutral-400 text-base text-white font-['PolySans_Trial']"
           >crafted with love by ACM-VIT</span
@@ -416,7 +425,7 @@
   <!-- Footer Background -->
   <div class="hidden md:flex w-full justify-center items-end mt-0">
     <img
-      src="/footer/footer-background.svg"
+      src={getAssetUrl("/footer/footer-background.svg")}
       alt="Footer Background"
       class="w-full max-w-none h-auto object-contain"
       style="min-width:100vw;"
@@ -451,7 +460,7 @@
         rel="noopener noreferrer"
       >
         <img
-          src="/footer/VIT-Map.png"
+          src={getAssetUrl("/footer/VIT-Map.png")}
           alt="VIT Map"
           class="w-full h-full object-cover rounded-lg shadow-lg border border-zinc-700"
           loading="lazy"
@@ -474,17 +483,21 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#about"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >ACM-VIT</a
           >
           <a
-            href="#"
+            href="https://vit.ac.in"
+            target="_blank"
+            rel="noopener noreferrer"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >VIT</a
           >
           <a
-            href="#"
+            href="https://www.acm.org"
+            target="_blank"
+            rel="noopener noreferrer"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >ACM</a
           >
@@ -500,32 +513,32 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >App</a
           >
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >competitive coding</a
           >
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >design</a
           >
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >management</a
           >
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >research</a
           >
           <a
-            href="#"
+            href="#domains"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >web</a
           >
@@ -541,42 +554,42 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >Code2CREATE</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >CRYPTIC HUNT</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >REVERSE CODING</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >CODEX CRYPTUM</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >FORKTOBER</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >THE TINY HACK</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >APPTITUDE</a
           >
           <a
-            href="#"
+            href="#events"
             class="text-[#f95f4a] text-xs font-light font-['PolySans_Trial'] uppercase hover:text-red-400 transition-colors"
             >MORE</a
           >
@@ -592,37 +605,37 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >ACMONE</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >CLI-RPG</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >EXAMCOOKER</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >CLITOP</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >LOCALHOST</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >OS</a
           >
           <a
-            href="#"
+            href="#projects"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >UNIPOOL</a
           >
@@ -638,12 +651,12 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#acm-w"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >about w</a
           >
           <a
-            href="#"
+            href="#acm-w"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >events</a
           >
@@ -659,27 +672,27 @@
         </div>
         <div class="flex flex-col justify-start items-start gap-1">
           <a
-            href="#"
+            href="#team"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >team</a
           >
           <a
-            href="#"
+            href="#blogs"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >blogs</a
           >
           <a
-            href="#"
+            href="#partners"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >partners</a
           >
           <a
-            href="#"
+            href="#gallery"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >gallery</a
           >
           <a
-            href="#"
+            href="#contact"
             class="text-white text-xs font-light font-['PolySans_Trial'] uppercase hover:text-yellow-50 transition-colors"
             >contact us</a
           >
@@ -706,7 +719,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Facebook.svg"
+            src={getAssetUrl("/footer/Facebook.svg")}
             alt="Facebook"
             class="w-8 h-8 hover:scale-110 transition-transform"
           /></a
@@ -717,7 +730,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Twitter.svg"
+            src={getAssetUrl("/footer/Twitter.svg")}
             alt="Twitter"
             class="w-6 h-6 hover:scale-110 transition-transform"
           /></a
@@ -728,7 +741,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Instagram.svg"
+            src={getAssetUrl("/footer/Instagram.svg")}
             alt="Instagram"
             class="w-8 h-8 hover:scale-110 transition-transform"
           /></a
@@ -739,7 +752,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Medium.svg"
+            src={getAssetUrl("/footer/Medium.svg")}
             alt="Medium"
             class="w-8 h-8 hover:scale-110 transition-transform"
           /></a
@@ -750,7 +763,7 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/Linkedin.svg"
+            src={getAssetUrl("/footer/Linkedin.svg")}
             alt="Linkedin"
             class="w-8 h-8 hover:scale-110 transition-transform"
           /></a
@@ -761,14 +774,18 @@
           target="_blank"
           rel="noopener noreferrer"
           ><img
-            src="/footer/youtube icon.png"
+            src={getAssetUrl("/footer/youtube icon.png")}
             alt="YouTube"
             class="w-6 h-6 rounded hover:scale-110 transition-transform"
           /></a
         >
       </div>
       <div class="flex items-center gap-2">
-        <img src="/footer/pixel-heart.svg" alt="pixel heart" class="w-5 h-5" />
+        <img
+          src={getAssetUrl("/footer/pixel-heart.svg")}
+          alt="pixel heart"
+          class="w-5 h-5"
+        />
         <span class="text-white text-xs font-['PolySans_Trial']"
           >crafted with love by ACM-VIT</span
         >
@@ -787,7 +804,7 @@
   <!-- Footer Background (mobile) -->
   <div class="w-full flex justify-center items-end mt-4">
     <img
-      src="/footer/footer-background.svg"
+      src={getAssetUrl("/footer/footer-background.svg")}
       alt="Footer Background"
       class="w-[560px] max-w-[100vw] h-auto object-contain opacity-90"
       loading="lazy"
