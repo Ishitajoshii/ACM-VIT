@@ -1,0 +1,118 @@
+---
+// Shared bottom legends for home page
+import { ButtonData } from "../data/legendData";
+import { getAssetUrl } from "../utils/cdn";
+---
+
+<div
+  class="legend-pins-wrapper absolute top-0 left-0 w-full h-screen pointer-events-none z-[60]"
+  aria-hidden="false"
+>
+  <!-- Left Legend -->
+  <div
+    class="legend-pin left-legend absolute bottom-8 z-[60] font-['PolySans_Trial',sans-serif] text-[#FEFCD9] max-w-[42vw] left-8 max-lg:bottom-7 max-md:max-w-[80vw] max-md:left-4 max-md:bottom-24"
+  >
+    <div class="legend-left-inner inline-flex flex-col gap-1">
+      <div
+        class="legend-line text-lg leading-[1.15] font-normal [text-shadow:1px_1px_2px_rgba(0,0,0,0.45)] max-xl:text-[0.95rem] max-lg:text-[0.85rem] max-[860px]:text-[0.8rem] max-md:text-[0.75rem] max-[480px]:text-[0.7rem]"
+      >
+        Established in&nbsp;<span class="accent text-[#F95F4A]">2009</span>.
+      </div>
+      <div
+        class="legend-line text-lg leading-[1.15] font-normal [text-shadow:1px_1px_2px_rgba(0,0,0,0.45)] max-xl:text-[0.95rem] max-lg:text-[0.85rem] max-[860px]:text-[0.8rem] max-md:text-[0.75rem] max-[480px]:text-[0.7rem]"
+      >
+        Evolving ever since.
+      </div>
+    </div>
+  </div>
+  <!-- Right Legend -->
+  <div
+    class="legend-pin right-legend absolute bottom-8 z-[60] font-['PolySans_Trial',sans-serif] text-[#FEFCD9] max-w-[42vw] right-8 text-right flex justify-end max-lg:bottom-7 max-md:left-4 max-md:right-auto max-md:text-left max-md:justify-start max-md:bottom-6 max-md:max-w-[80vw]"
+  >
+    <div class="legend-right-inner inline-flex flex-col gap-1">
+      <div
+        class="legend-line text-lg leading-[1.15] font-normal [text-shadow:1px_1px_2px_rgba(0,0,0,0.45)] max-xl:text-[0.95rem] max-lg:text-[0.85rem] max-[860px]:text-[0.8rem] max-md:text-[0.75rem] max-[480px]:text-[0.7rem] whitespace-nowrap"
+      >
+        We're not just another <span class="accent text-[#F95F4A]"
+          >tech chapter</span
+        ><span class="punct text-[#FEFCD9]">.</span>
+      </div>
+      <div
+        class="legend-line text-lg leading-[1.15] font-normal [text-shadow:1px_1px_2px_rgba(0,0,0,0.45)] max-xl:text-[0.95rem] max-lg:text-[0.85rem] max-[860px]:text-[0.8rem] max-md:text-[0.75rem] max-[480px]:text-[0.7rem] whitespace-nowrap"
+      >
+        We're the <span class="accent text-[#F95F4A]">conspiracy</span><span
+          class="punct text-[#FEFCD9]"
+        >
+          that actually works.</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <a
+    href={ButtonData.link}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="c2c-btn absolute top-7 right-10 z-[600] pointer-events-auto w-auto h-12 bg-[#F95F4A] rounded-[41px] flex items-center pl-[34px] pr-8 gap-3 max-md:right-4 max-md:top-3 max-md:scale-[0.5] max-md:origin-top-right transition-transform hover:scale-105 no-underline"
+  >
+    <div
+      class="text-[#FEFCD9] text-base font-light font-['PolySans_Trial'] uppercase"
+    >
+      {ButtonData.text}
+    </div>
+    <div class="w-6 h-6 relative overflow-hidden">
+      <img
+        src={getAssetUrl("/top-arrow.svg")}
+        alt="arrow"
+        class="w-full h-full"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  </a>
+</div>
+
+<style>
+  @media (max-width: 768px) {
+    .legend-pin {
+      display: none;
+    }
+  }
+
+  body.mobile-menu-open .legend-pins-wrapper {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const wrapper = document.querySelector(".legend-pins-wrapper");
+  const triggerSection = document.getElementById("home");
+
+  if (triggerSection && wrapper) {
+    document.body.appendChild(wrapper);
+
+    ScrollTrigger.create({
+      trigger: triggerSection,
+      start: "top top",
+      end: "bottom bottom",
+      pin: wrapper,
+      pinSpacing: false,
+      onRefresh: (self) => {
+        if (
+          self.pin &&
+          self.pin.parentNode &&
+          self.pin.parentNode instanceof Element &&
+          self.pin.parentNode.classList.contains("pin-spacer")
+        ) {
+          (self.pin.parentNode as HTMLElement).style.pointerEvents = "none";
+        }
+      },
+    });
+  }
+</script>

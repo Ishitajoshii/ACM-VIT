@@ -1,0 +1,256 @@
+
+<div id="preloader" class="preloader">
+  <div class="loader-content">
+    <div id="lottie-container" class="lottie-container"></div>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from "gsap";
+  import lottie from "lottie-web/build/player/lottie_light";
+  import type { AnimationItem } from "lottie-web";
+
+  const preloader = document.getElementById("preloader");
+  const progressFill = document.querySelector(".progress-fill") as HTMLElement;
+  const lottieContainer = document.getElementById("lottie-container");
+
+  let loadingAnimation: AnimationItem | null = null;
+  let loadedAnimation: AnimationItem | null = null;
+  let progressTween: gsap.core.Tween | null = null;
+
+  if (preloader && progressFill && lottieContainer) {
+    const preloaderShown = sessionStorage.getItem("preloaderShown");
+
+    if (preloaderShown) {
+      preloader.style.display = "none";
+    } else {
+      gsap.set(preloader, { autoAlpha: 1 });
+      gsap.set(progressFill, { width: "0%" });
+
+      const startProgress = () => {
+        progressTween = gsap.to(progressFill, {
+          width: "90%",
+          duration: 1.6,
+          ease: "power1.out",
+        });
+      };
+
+      const loadLoadingAnimation = async () => {
+        try {
+          const loadingResponse = await fetch("/loader/loading_state.json");
+          const loadingData = await loadingResponse.json();
+          loadingAnimation = lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            animationData: loadingData,
+          });
+        } catch (error) {
+          console.error("Failed to load loading animation:", error);
+          loadingAnimation = lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: true,
+            autoplay: true,
+            path: "/loader/loading_state.json",
+          });
+        }
+      };
+
+      const loadLoadedAnimation = async () => {
+        try {
+          const loadedResponse = await fetch("/loader/loaded_state.json");
+          const loadedData = await loadedResponse.json();
+          return lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: false,
+            autoplay: true,
+            animationData: loadedData,
+          });
+        } catch (error) {
+          console.error("Failed to load completion animation:", error);
+          return lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: "svg",
+            loop: false,
+            autoplay: true,
+            path: "/loader/loaded_state.json",
+          });
+        }
+      };
+
+      startProgress();
+      loadLoadingAnimation();
+
+      let windowLoaded = false;
+
+      // Ensure we finish only when EVERYTHING is loaded
+      const onWindowLoad = () => {
+        if (windowLoaded) return;
+        windowLoaded = true;
+
+        // Force progress to 100% first
+        gsap.to(progressFill, {
+          width: "100%",
+          duration: 0.5,
+          onComplete: () => {
+            if (loadingAnimation) {
+              loadingAnimation.destroy();
+            }
+
+            loadLoadedAnimation()
+              .then((animation) => {
+                loadedAnimation = animation;
+                loadedAnimation.addEventListener("complete", finishLoading);
+              })
+              .catch(() => {
+                finishLoading();
+              });
+          },
+        });
+      };
+
+      if (document.readyState === "complete") {
+        onWindowLoad();
+      } else {
+        window.addEventListener("load", onWindowLoad);
+      }
+
+      // Fallback safety timeout
+      setTimeout(() => {
+        if (!windowLoaded) {
+          console.warn("Preloader timeout reached - forcing dismissal");
+          onWindowLoad();
+        }
+      }, 10000);
+    }
+  }
+
+  function finishLoading() {
+    const preloader = document.getElementById("preloader");
+    if (!preloader) return;
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        sessionStorage.setItem("preloaderShown", "true");
+        // Clean up animations
+        if (progressTween) progressTween.kill();
+        if (loadingAnimation) loadingAnimation.destroy();
+        if (loadedAnimation) loadedAnimation.destroy();
+      },
+    });
+
+    tl.to(".progress-bar", {
+      opacity: 0,
+      duration: 0.3,
+    })
+      .to(preloader, {
+        yPercent: -100,
+        duration: 0.8,
+        ease: "power4.inOut",
+      })
+      .set(preloader, { display: "none" });
+  }
+</script>
+
+<style>
+  .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0d0e0d; /* Match body background */
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .lottie-container {
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .lottie-container svg {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .progress-bar {
+    width: 300px; /* Same width as lottie container */
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: #ffffff;
+    position: relative;
+    width: 0%;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      left: -100%;
+    }
+    100% {
+      left: 100%;
+    }
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .lottie-container {
+      width: 250px;
+      height: 250px;
+    }
+    
+    .progress-bar {
+      width: 250px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lottie-container {
+      width: 200px;
+      height: 200px;
+    }
+    
+    .progress-bar {
+      width: 200px;
+    }
+  }
+</style>
