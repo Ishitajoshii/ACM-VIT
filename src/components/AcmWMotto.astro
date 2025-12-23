@@ -9,14 +9,34 @@ import { getAssetUrl } from "../utils/cdn";
   <!-- Marquee Container -->
   <div class="marquee-container">
     <div class="marquee-content z-20">
-      <img src={getAssetUrl("/acmwmotto.svg")} alt="AcmW Motto" />
-      <img src={getAssetUrl("/acmwmotto.svg")} alt="AcmW Motto" />
-      <img src={getAssetUrl("/acmwmotto.svg")} alt="AcmW Motto" />
+      <img
+        src={getAssetUrl("/acmwmotto.svg")}
+        alt="AcmW Motto"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        src={getAssetUrl("/acmwmotto.svg")}
+        alt="AcmW Motto"
+        loading="lazy"
+        decoding="async"
+      />
+      <img
+        src={getAssetUrl("/acmwmotto.svg")}
+        alt="AcmW Motto"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   </div>
 
   <div class="absolute bottom-0 right-0">
-    <img src={getAssetUrl("/acmwtable.svg")} alt="AcmW Table" />
+    <img
+      src={getAssetUrl("/acmwtable.svg")}
+      alt="AcmW Table"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 </section>
 
@@ -65,5 +85,11 @@ import { getAssetUrl } from "../utils/cdn";
 
   .slow {
     animation-duration: 25s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-content {
+      animation: none;
+    }
   }
 </style>

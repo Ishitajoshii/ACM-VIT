@@ -29,6 +29,8 @@ import { getAssetUrl } from "../utils/cdn";
       alt=""
       class="w-full h-full object-cover scale-125 will-change-transform transform-gpu"
       style="backface-visibility: hidden;"
+      loading="lazy"
+      decoding="async"
     />
   </div>
 
@@ -59,6 +61,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/Cassette_App.svg")}
           alt="App Development"
           class="mobile-cassette-img w-full h-auto block drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] rounded-[20px]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div
@@ -69,6 +73,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/Cassette_cc.svg")}
           alt="Competitive Coding"
           class="mobile-cassette-img w-full h-auto block drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] rounded-[20px]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div
@@ -79,6 +85,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/Cassette_Design.svg")}
           alt="Design"
           class="mobile-cassette-img w-full h-auto block drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] rounded-[20px]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div
@@ -89,6 +97,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/Cassette_Management.svg")}
           alt="Management"
           class="mobile-cassette-img w-full h-auto block drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] rounded-[20px]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
       <div
@@ -99,6 +109,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/Cassette_Research.svg")}
           alt="Research"
           class="mobile-cassette-img w-full h-auto block drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)] rounded-[20px]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -316,6 +328,8 @@ import { getAssetUrl } from "../utils/cdn";
                                         src="${getAssetUrl(icon.src)}" 
                                         alt="${icon.alt}" 
                                         class="w-8 h-8 grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100" 
+                                        loading="lazy"
+                                        decoding="async"
                                     />
                                 </div>
                             `
@@ -350,6 +364,8 @@ import { getAssetUrl } from "../utils/cdn";
                                 src="${getAssetUrl(config.cassetteSvg)}" 
                                 alt="${config.title} Cassette" 
                                 class="w-32 h-auto hover:scale-105 transition-transform duration-300" 
+                                loading="lazy"
+                                decoding="async"
                             />
                         </div>
                         <div class="flex items-center justify-center">
@@ -357,6 +373,8 @@ import { getAssetUrl } from "../utils/cdn";
                                 src="${getAssetUrl("/Cassette_Design.svg")}" 
                                 alt="Design Cassette" 
                                 class="w-32 h-auto hover:scale-105 transition-transform duration-300 opacity-60" 
+                                loading="lazy"
+                                decoding="async"
                             />
                         </div>
                     </div>

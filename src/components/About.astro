@@ -6,8 +6,9 @@ import { getAssetUrl } from "../utils/cdn";
 <div class="about-container w-screen overflow-hidden">
   <!-- About Section 1: -->
   <section
-    class="about-section section-1 w-screen h-screen relative bg-center bg-cover bg-no-repeat"
-    style={`background-image: url(${getAssetUrl("/about/about-acmvit.jpeg")})`}
+    class="about-section section-1 w-screen h-screen relative bg-center bg-cover bg-no-repeat js-lazy-bg"
+    data-bg={getAssetUrl("/about/about-acmvit.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="svg-container svg-left relative w-[500px] h-[500px] ml-[-50px] mb-[-600px]"
@@ -16,6 +17,8 @@ import { getAssetUrl } from "../utils/cdn";
         src={getAssetUrl("/about/Cassette.svg")}
         alt="Cassette 1"
         class="cassette-svg w-full h-auto origin-bottom-left rotate-[21deg]"
+        loading="lazy"
+        decoding="async"
       />
     </div>
     <div
@@ -43,8 +46,9 @@ import { getAssetUrl } from "../utils/cdn";
 
   <!-- About Section 2:-->
   <section
-    class="about-section section-2 w-screen h-screen relative bg-center bg-cover bg-no-repeat"
-    style={`background-image: url(${getAssetUrl("/about/about-vit.jpeg")})`}
+    class="about-section section-2 w-screen h-screen relative bg-center bg-cover bg-no-repeat js-lazy-bg"
+    data-bg={getAssetUrl("/about/about-vit.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="text-container text-left absolute top-1/2 -translate-y-1/2 text-white p-8 left-[10vw] w-[55vw] max-w-[800px]"
@@ -75,14 +79,17 @@ import { getAssetUrl } from "../utils/cdn";
         src={getAssetUrl("/about/3.svg")}
         alt="Cassette 2"
         class="cassette-svg w-full h-auto origin-bottom-right rotate-[-15deg]"
+        loading="lazy"
+        decoding="async"
       />
     </div>
   </section>
 
   <!-- About Section 3:-->
   <section
-    class="about-section section-3 w-screen h-screen relative bg-center bg-cover bg-no-repeat"
-    style={`background-image: url(${getAssetUrl("/about/about-acm.jpeg")})`}
+    class="about-section section-3 w-screen h-screen relative bg-center bg-cover bg-no-repeat js-lazy-bg"
+    data-bg={getAssetUrl("/about/about-acm.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="svg-container svg-left-two relative w-[500px] h-[500px] ml-[-50px] mb-[200px]"
@@ -91,6 +98,8 @@ import { getAssetUrl } from "../utils/cdn";
         src={getAssetUrl("/about/2.svg")}
         alt="Cassette 3"
         class="cassette-svg w-full h-auto origin-bottom-left rotate-[11deg]"
+        loading="lazy"
+        decoding="async"
       />
     </div>
     <div
@@ -117,13 +126,6 @@ import { getAssetUrl } from "../utils/cdn";
   </section>
 </div>
 
-<!-- Preload Background Images -->
-<div class="hidden" aria-hidden="true" style="display: none;">
-  <img src={getAssetUrl("/about/about-acmvit.jpeg")} alt="" loading="eager" />
-  <img src={getAssetUrl("/about/about-vit.jpeg")} alt="" loading="eager" />
-  <img src={getAssetUrl("/about/about-acm.jpeg")} alt="" loading="eager" />
-</div>
-
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -131,6 +133,32 @@ import { getAssetUrl } from "../utils/cdn";
   gsap.registerPlugin(ScrollTrigger);
 
   function initAnimations() {
+    const lazySections = document.querySelectorAll(".js-lazy-bg");
+    const loadBg = (section: Element) => {
+      if (!(section instanceof HTMLElement)) return;
+      const bg = section.dataset.bg;
+      if (!bg) return;
+      section.style.backgroundImage = `url(${bg})`;
+      section.removeAttribute("data-bg");
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadBg(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "200px 0px", threshold: 0.01 }
+      );
+      lazySections.forEach((section) => observer.observe(section));
+    } else {
+      lazySections.forEach(loadBg);
+    }
+
     const sections = document.querySelectorAll(".about-section");
 
     sections.forEach((section) => {

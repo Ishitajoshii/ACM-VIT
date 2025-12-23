@@ -43,6 +43,8 @@ const idSuffix = Math.random().toString(36).substr(2, 9);
     alt={alt}
     class="rounded-3xl"
     style={`position: absolute; left: calc(50% + ${ox}); top: calc(50% + ${oy}); transform: translate(-50%, -50%); ${sizeStyle}; z-index: -10;`}
+    loading="lazy"
+    decoding="async"
   />
   <svg
     width="100%"

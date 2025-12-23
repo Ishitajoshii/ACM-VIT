@@ -106,6 +106,8 @@ import ProofGallery from "./ProofGallery.astro";
         src={getAssetUrl("/gallery.svg")}
         alt="Gallery Title"
         class="gallery-title relative z-10 w-[90vw] max-w-3xl mb-2"
+        loading="lazy"
+        decoding="async"
       />
     </div>
 
@@ -205,6 +207,12 @@ import ProofGallery from "./ProofGallery.astro";
     -webkit-text-stroke-color: #ffffff;
     color: transparent;
     opacity: 0.1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floating-word {
+      animation: none;
+    }
   }
 
   @keyframes float {

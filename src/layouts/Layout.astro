@@ -28,7 +28,14 @@ import { getAssetUrl } from "../utils/cdn";
       style={`background-image: url('${getAssetUrl("/background_pattern.svg")}');`}
     >
     </div>
-    <img src={getAssetUrl("/acm_topleft.svg")} alt="ACM-VIT" class="acm-logo" />
+    <img
+      src={getAssetUrl("/acm_topleft.svg")}
+      alt="ACM-VIT"
+      class="acm-logo"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+    />
     <div class="app-root min-h-screen flex flex-col">
       <Header />
       <main class="content flex-1 relative pt-28">

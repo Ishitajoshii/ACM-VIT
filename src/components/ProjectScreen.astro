@@ -120,6 +120,8 @@ const { projects = [] } = Astro.props;
                     alt={icon.type}
                     width="24"
                     style={`filter: brightness(0) saturate(100%) invert(${icon.iconColor === "#FEFCD9" ? "96%" : "0%"});`}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </a>
               ))}

@@ -7,9 +7,8 @@ import { getAssetUrl } from "../utils/cdn";
   <!-- About Section 1 -->
   <section
     class="about-section-phone section-1 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-center bg-cover bg-no-repeat radial-overlay"
-    style={{
-      backgroundImage: `url(${getAssetUrl("/about/about-acmvit.jpeg")})`,
-    }}
+    data-bg={getAssetUrl("/about/about-acmvit.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -33,6 +32,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/about/Cassette.svg")}
           alt="Cassette 1"
           class="cassette-svg-phone w-full h-auto origin-center drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] will-change-[transform]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -41,7 +42,8 @@ import { getAssetUrl } from "../utils/cdn";
   <!-- About Section 2 -->
   <section
     class="about-section-phone section-2 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-center bg-cover bg-no-repeat radial-overlay"
-    style={{ backgroundImage: `url(${getAssetUrl("/about/about-vit.jpeg")})` }}
+    data-bg={getAssetUrl("/about/about-vit.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -65,6 +67,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/about/3.svg")}
           alt="Cassette 2"
           class="cassette-svg-phone w-full h-auto origin-center drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] will-change-[transform]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -73,7 +77,8 @@ import { getAssetUrl } from "../utils/cdn";
   <!-- About Section 3 -->
   <section
     class="about-section-phone section-3 w-full h-screen relative flex flex-col justify-center px-4 py-8 overflow-hidden bg-center bg-cover bg-no-repeat radial-overlay"
-    style={{ backgroundImage: `url(${getAssetUrl("/about/about-acm.jpeg")})` }}
+    data-bg={getAssetUrl("/about/about-acm.jpeg")}
+    style="background-color: #0d0e0d;"
   >
     <div
       class="content-wrapper flex flex-col items-center justify-center h-full gap-4"
@@ -92,6 +97,8 @@ import { getAssetUrl } from "../utils/cdn";
           src={getAssetUrl("/about/2.svg")}
           alt="Cassette 3"
           class="cassette-svg-phone w-full h-auto origin-center drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] will-change-[transform]"
+          loading="lazy"
+          decoding="async"
         />
       </div>
     </div>
@@ -128,6 +135,32 @@ import { getAssetUrl } from "../utils/cdn";
 
   function initPhoneAnimations() {
     console.log("Initializing Phone Animations");
+    const lazySections = document.querySelectorAll(".about-section-phone");
+    const loadBg = (section: Element) => {
+      if (!(section instanceof HTMLElement)) return;
+      const bg = section.dataset.bg;
+      if (!bg) return;
+      section.style.backgroundImage = `url(${bg})`;
+      section.removeAttribute("data-bg");
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              loadBg(entry.target);
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { rootMargin: "200px 0px", threshold: 0.01 }
+      );
+      lazySections.forEach((section) => observer.observe(section));
+    } else {
+      lazySections.forEach(loadBg);
+    }
+
     const sections = document.querySelectorAll(".about-section-phone");
 
     sections.forEach((section, index) => {

@@ -56,9 +56,16 @@ while (i < projects.length) {
   }
   i++;
 }
+
+const worksHeight = works.length * 50;
 ---
 
-<section id="work" class="s-work" data-intersect>
+<section
+  id="work"
+  class="s-work"
+  data-intersect
+  style={`--height: ${worksHeight}lvh;`}
+>
   <div class="s__outer">
     <div class="s__inner js-container">
       <h2 class="s__title">
@@ -378,6 +385,8 @@ while (i < projects.length) {
     speed!: number;
     isPaused: boolean;
     loadIsStarted: boolean;
+    reducedMotion: boolean;
+    reducedData: boolean;
 
     constructor() {
       this.el = document.querySelector(".s-work")!;
@@ -430,6 +439,9 @@ while (i < projects.length) {
 
       this.isPaused = true;
       this.loadIsStarted = false;
+      this.reducedMotion = false;
+      this.reducedData = false;
+      this.updateMotionPrefs();
 
       if (document.readyState === "complete") {
         ticker.nextTick(this.init, this);
@@ -438,6 +450,15 @@ while (i < projects.length) {
         // Fallback if siteLoaded is never emitted in standalone
         setTimeout(() => this.init(), 100);
       }
+    }
+
+    updateMotionPrefs() {
+      this.reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      this.reducedData = window.matchMedia(
+        "(prefers-reduced-data: reduce)"
+      ).matches;
     }
 
     init() {
@@ -485,6 +506,7 @@ while (i < projects.length) {
         if (width === this.lastWidth) return;
         this.lastWidth = width;
 
+        this.updateMotionPrefs();
         this.setCtxStyle();
         this.setSize();
         this.setMask();
@@ -611,6 +633,7 @@ while (i < projects.length) {
     setLetters() {
       const { letters, scene } = this;
       const safeWidth = window.safeWidth || window.innerWidth;
+      const reduceMotion = this.reducedMotion || this.reducedData;
 
       letters.forEach((letter, j) => {
         letter.ghosts.forEach((ghost: Ghost) => {
@@ -627,12 +650,14 @@ while (i < projects.length) {
 
         const multiplier = safeWidth > 767 ? 1.6 : 0.75;
 
-        // Mobile Optimization: Reduce or disable ghost letters
-        if (safeWidth < 768) {
+        if (reduceMotion) {
           letter.total = 0;
         } else {
           letter.total =
             Math.round((this.bounding.width / letter.width) * multiplier) + 2;
+          if (safeWidth < 768) {
+            letter.total = Math.max(3, Math.min(letter.total, 10));
+          }
         }
 
         for (let i = 0; i < letter.total; i++) {
@@ -830,6 +855,7 @@ while (i < projects.length) {
     }
 
     moveLetters() {
+      if (this.reducedMotion || this.reducedData) return;
       const { speed, letters, animationProgress } = this;
       letters.forEach((letter, i) => {
         const letterSpeed = speed * letter.freq;
@@ -851,7 +877,7 @@ while (i < projects.length) {
 
       // Mobile Optimization: Disable canvas points
       const safeWidth = window.safeWidth || window.innerWidth;
-      if (safeWidth < 768) return;
+      if (safeWidth < 768 || this.reducedMotion || this.reducedData) return;
 
       const gap = 24;
       const cols = Math.ceil((bounding.width * 1.2) / gap);
@@ -923,10 +949,7 @@ while (i < projects.length) {
       );
 
       // Movement
-      if (window.innerWidth >= 768) {
-        // this.movePoints()
-        this.moveLetters();
-      }
+      this.moveLetters();
 
       // Draw
       if (window.innerWidth >= 768) {
@@ -935,7 +958,31 @@ while (i < projects.length) {
     }
   }
 
-  new Section();
+  const sectionRoot = document.querySelector(".s-work");
+  if (sectionRoot) {
+    const initSection = () => {
+      if ((sectionRoot as HTMLElement).dataset.sWorkInit) return;
+      (sectionRoot as HTMLElement).dataset.sWorkInit = "true";
+      new Section();
+    };
+
+    if ("IntersectionObserver" in window) {
+      const initObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              initSection();
+              observer.disconnect();
+            }
+          });
+        },
+        { rootMargin: "200px 0px", threshold: 0.01 }
+      );
+      initObserver.observe(sectionRoot);
+    } else {
+      initSection();
+    }
+  }
 </script>
 
 <style lang="scss">
@@ -1115,6 +1162,18 @@ while (i < projects.length) {
       }
     }
 
+    @media (prefers-reduced-motion: reduce) {
+      .s__title {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-data: reduce) {
+      .s__title {
+        opacity: 1;
+      }
+    }
+
     .s__scene {
       --shadow: var(--color-shadow);
       --progress: 0.5;
@@ -1187,16 +1246,6 @@ while (i < projects.length) {
             );
         }
 
-        @media only screen and (max-width: 767px) and (orientation: landscape),
-          only screen and (max-width: 576px) {
-          /* Simplified mobile transform: Remove 3D rotation, simpler translation */
-          transform: translate3d(
-              calc(var(--progress) * (60vw + 120%) - 50%),
-              calc(var(--y) * 100% - 50%),
-              0
-            )
-            scale(var(--size));
-        }
       }
     }
 

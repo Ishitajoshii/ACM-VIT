@@ -17,9 +17,17 @@ const { title, imageUrl, link } = Astro.props;
       src={getAssetUrl("/partner-casette.svg")}
       alt="Partner Casette Boilerplate"
       class="w-full h-auto object-cover absolute pointer-events-none rounded-lg mb-4"
+      loading="lazy"
+      decoding="async"
     />
   </div>
   <div class="z-10 h-full w-full flex justify-center items-center">
-    <img src={imageUrl} alt={title} class="object-contain h-[60%] w-[60%]" />
+    <img
+      src={imageUrl}
+      alt={title}
+      class="object-contain h-[60%] w-[60%]"
+      loading="lazy"
+      decoding="async"
+    />
   </div>
 </div>
