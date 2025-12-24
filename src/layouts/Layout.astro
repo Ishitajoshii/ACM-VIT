@@ -150,6 +150,42 @@ const description =
     window.visualViewport.addEventListener("resize", scheduleRefresh, { passive: true });
   }
     </script>
+  <script>
+    (() => {
+      const mountVariants = () => {
+        const hosts = document.querySelectorAll("[data-variant-host]");
+        if (!hosts.length) return;
+
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const variant = isMobile ? "mobile" : "desktop";
+
+        hosts.forEach((host) => {
+          const element = host as HTMLElement;
+          if (element.dataset.variantReady === variant) return;
+
+          const template = element.querySelector(
+            `template[data-variant="${variant}"]`
+          ) as HTMLTemplateElement | null;
+          if (!template) return;
+
+          Array.from(element.children).forEach((child) => {
+            if (child.tagName !== "TEMPLATE") {
+              child.remove();
+            }
+          });
+
+          element.appendChild(template.content.cloneNode(true));
+          element.dataset.variantReady = variant;
+        });
+      };
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", mountVariants);
+      } else {
+        mountVariants();
+      }
+    })();
+  </script>
   </body>
 </html>
 

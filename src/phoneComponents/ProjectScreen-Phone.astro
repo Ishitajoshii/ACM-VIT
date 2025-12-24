@@ -71,7 +71,7 @@ const { projects = [] } = Astro.props;
           <div class="moving-border-box-b py-8 flex items-center justify-center">
             <div class="w-[60%]">
               <Cassette
-                overlaySrc={projectData.cassette.src}
+                overlaySrc={getAssetUrl(projectData.cassette.src)}
                 alt={projectData.cassette.alt}
                 color={projectData.buttons.primary.backgroundColor}
                 overlaySizePercent={10}
