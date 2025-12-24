@@ -58,13 +58,14 @@ while (i < projects.length) {
 }
 
 const worksHeight = works.length * 50;
+const worksHeightMobile = works.length * 45;
 ---
 
 <section
   id="work"
   class="s-work"
   data-intersect
-  style={`--height: ${worksHeight}lvh;`}
+  style={`--height: ${worksHeight}lvh; --height-mobile: ${worksHeightMobile}lvh;`}
 >
   <div class="s__outer">
     <div class="s__inner js-container">
@@ -1230,10 +1231,11 @@ const worksHeight = works.length * 50;
         @media only screen and (max-width: 987px) {
           transform: rotateY(calc(var(--progress) * -20deg))
             translate3d(
-              calc(var(--progress) * (60vw + 120%) - 50%),
+              calc(var(--progress) * (100vw + 240%) - 50%),
               calc(var(--y) * 50% - 50%),
               calc(var(--progress) * var(--progress) * -5rem)
-            );
+            )
+            scale(var(--size));
         }
 
       }
