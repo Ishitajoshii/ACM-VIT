@@ -726,7 +726,9 @@ const worksHeightMobile = works.length * 45;
         },
       });
 
-      const isMobile = window.innerWidth < 768;
+      const isMobile = window.matchMedia(
+        "(max-width: 768px), (pointer: coarse)"
+      ).matches;
 
       tl.fromTo(
         mask.el,
@@ -867,8 +869,10 @@ const worksHeightMobile = works.length * 45;
       this.points = [];
 
       // Mobile Optimization: Disable canvas points
-      const safeWidth = window.safeWidth || window.innerWidth;
-      if (safeWidth < 768 || this.reducedMotion || this.reducedData) return;
+      const isMobile = window.matchMedia(
+        "(max-width: 768px), (pointer: coarse)"
+      ).matches;
+      if (isMobile || this.reducedMotion || this.reducedData) return;
 
       const gap = 24;
       const cols = Math.ceil((bounding.width * 1.2) / gap);

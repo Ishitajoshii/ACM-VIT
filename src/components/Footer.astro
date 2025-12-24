@@ -62,11 +62,7 @@ import { getAssetUrl } from "../utils/cdn";
       <div class="flex justify-start items-start gap-8 flex-wrap">
         <!-- About Section -->
         <div class="w-16 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="self-stretch text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            About
-          </div>
+          <div class="footer-section-title text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase">About</div>
           <div
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
@@ -97,11 +93,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         <!-- Domains Section -->
         <div class="w-44 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="self-stretch text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            Domains
-          </div>
+          <div class="footer-section-title text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase">Domains</div>
           <div
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
@@ -146,11 +138,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         <!-- Events Section -->
         <div class="w-36 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="self-stretch text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            Events
-          </div>
+          <div class="footer-section-title text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase">Events</div>
           <div
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
@@ -207,11 +195,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         <!-- Projects Section -->
         <div class="w-24 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="self-stretch text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            Projects
-          </div>
+          <div class="footer-section-title text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase">Projects</div>
           <div
             class="self-stretch h-44 flex flex-col justify-start items-start gap-2"
           >
@@ -262,11 +246,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         <!-- ACM-W Section -->
         <div class="w-16 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            ACM-W
-          </div>
+          <div class="footer-section-title text-yellow-50 text-base font-light font-['PolySans_Trial'] uppercase">ACM-W</div>
           <div
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
@@ -287,11 +267,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         <!-- More Section -->
         <div class="w-24 inline-flex flex-col justify-start items-start gap-4">
-          <div
-            class="self-stretch text-[#f95f4a] text-base font-light font-['PolySans_Trial'] uppercase"
-          >
-            More
-          </div>
+          <div class="footer-section-title text-[#f95f4a] text-base font-light font-['PolySans_Trial'] uppercase">More</div>
           <div
             class="self-stretch flex flex-col justify-start items-start gap-2"
           >
@@ -851,3 +827,21 @@ import { getAssetUrl } from "../utils/cdn";
     </div>
   </template>
 </div>
+
+<style>
+  @media (min-width: 768px) {
+    .footer-section-title {
+      display: inline-block;
+      padding: 0 0 0.25rem 0;
+      font-family: 'PolySans_Trial', 'PolySans Bold', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-bottom: 2px dashed currentColor;
+      background: transparent;
+      margin-bottom: 0.5em;
+      font-weight: 400;
+      box-sizing: border-box;
+    }
+  }
+</style>

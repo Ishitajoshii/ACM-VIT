@@ -137,7 +137,9 @@ const description =
         const hosts = document.querySelectorAll("[data-variant-host]");
         if (!hosts.length) return;
 
-        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        const isMobile = window.matchMedia(
+          "(max-width: 768px), (pointer: coarse)"
+        ).matches;
         const variant = isMobile ? "mobile" : "desktop";
 
         let mountedAny = false;
@@ -235,7 +237,7 @@ const description =
     height: 100%;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 768px), (pointer: coarse) {
     .acm-logo {
       height: 45px;
       top: 15px;

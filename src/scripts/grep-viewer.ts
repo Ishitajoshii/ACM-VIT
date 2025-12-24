@@ -6,6 +6,7 @@ GlobalWorkerOptions.workerSrc = workerSrc;
 const init = () => {
   const viewer = document.querySelector<HTMLElement>("[data-grep-viewer]");
   const pdfUrl = viewer?.getAttribute("data-pdf-url");
+  const fallbackUrl = viewer?.getAttribute("data-pdf-fallback");
   const stage = document.querySelector<HTMLElement>("[data-grep-stage]");
   const leftCanvas = document.querySelector<HTMLCanvasElement>(
     "[data-grep-left]"
@@ -61,7 +62,7 @@ const init = () => {
   let cacheSignature = "";
 
   const getPagesPerSpread = () =>
-    window.matchMedia("(max-width: 768px)").matches ? 1 : 2;
+    window.matchMedia("(max-width: 768px), (pointer: coarse)").matches ? 1 : 2;
 
   const getCanvasContext = (canvas: HTMLCanvasElement) =>
     canvas.getContext("2d");
@@ -188,7 +189,11 @@ const init = () => {
     const ctx = getCanvasContext(canvas);
     if (!ctx) return;
 
-    await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
+    await page.render({
+      canvasContext: ctx,
+      viewport: scaledViewport,
+      canvas,
+    }).promise;
     storeInCache(pageNumber, canvas, width, height, ratio);
   };
 
@@ -362,7 +367,11 @@ const init = () => {
     const ctx = cacheCanvas.getContext("2d");
     if (!ctx) return;
 
-    await page.render({ canvasContext: ctx, viewport: scaledViewport }).promise;
+    await page.render({
+      canvasContext: ctx,
+      viewport: scaledViewport,
+      canvas: cacheCanvas,
+    }).promise;
     pageCache.set(pageNumber, {
       canvas: cacheCanvas,
       cssWidth: width,
@@ -400,9 +409,31 @@ const init = () => {
     });
   };
 
+  const loadPdf = (url: string) => getDocument(url).promise;
+  const usePdf = async (url: string) => {
+    pdfDoc = loadPdf(url);
+    return await pdfDoc;
+  };
+
   (async () => {
-    pdfDoc = getDocument(pdfUrl).promise;
-    totalPages = (await pdfDoc).numPages;
+    try {
+      const resolved = await usePdf(pdfUrl);
+      totalPages = resolved.numPages;
+    } catch (error) {
+      if (fallbackUrl && fallbackUrl !== pdfUrl) {
+        try {
+          const resolved = await usePdf(fallbackUrl);
+          totalPages = resolved.numPages;
+        } catch (fallbackError) {
+          console.error("GREP PDF failed to load:", fallbackError);
+          return;
+        }
+      } else {
+        console.error("GREP PDF failed to load:", error);
+        return;
+      }
+    }
+
     updateHud();
     await renderSpread();
   })();
