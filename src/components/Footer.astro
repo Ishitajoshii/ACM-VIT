@@ -3,7 +3,9 @@
 import { getAssetUrl } from "../utils/cdn";
 ---
 
-<footer id="footer" class="relative w-full w-full overflow-hidden m-0 p-0">
+<div data-variant-host>
+  <template data-variant="desktop">
+    <footer id="footer" class="relative w-full w-full overflow-hidden m-0 p-0">
   <div
     class="hidden md:block w-[1438.01px] h-0 outline outline-1 outline-offset-[-0.50px] outline-white mx-auto"
   >
@@ -449,12 +451,14 @@ import { getAssetUrl } from "../utils/cdn";
       decoding="async"
     />
   </div>
-</footer>
+    </footer>
+  </template>
 
-<!-- Phone Screen Version -->
-<div
-  class="block md:hidden relative w-full h-auto overflow-hidden min-h-[1100px] pb-0"
->
+  <template data-variant="mobile">
+    <!-- Phone Screen Version -->
+    <div
+      class="block md:hidden relative w-full h-auto overflow-hidden min-h-[1100px] pb-0"
+    >
   <!-- Divider line -->
   <div
     class="w-full h-0 outline outline-1 outline-offset-[-0.5px] outline-white mx-auto"
@@ -835,13 +839,15 @@ import { getAssetUrl } from "../utils/cdn";
   </div>
 
   <!-- Footer Background (mobile) -->
-  <div class="w-full flex justify-center items-end mt-4">
-    <img
-      src={getAssetUrl("/footer/footer-background.svg")}
-      alt="Footer Background"
-      class="w-[560px] max-w-[100vw] h-auto object-contain opacity-90"
-      loading="lazy"
-      decoding="async"
-    />
-  </div>
+      <div class="w-full flex justify-center items-end mt-4">
+        <img
+          src={getAssetUrl("/footer/footer-background.svg")}
+          alt="Footer Background"
+          class="w-[560px] max-w-[100vw] h-auto object-contain opacity-90"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </template>
 </div>

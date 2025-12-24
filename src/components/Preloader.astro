@@ -9,133 +9,154 @@
 </div>
 
 <script>
-  import gsap from "gsap";
-  import lottie from "lottie-web/build/player/lottie_light";
-  import type { AnimationItem } from "lottie-web";
-
   const preloader = document.getElementById("preloader");
   const progressFill = document.querySelector(".progress-fill") as HTMLElement;
   const lottieContainer = document.getElementById("lottie-container");
+  import { getAssetUrl } from "../utils/cdn";
 
-  let loadingAnimation: AnimationItem | null = null;
-  let loadedAnimation: AnimationItem | null = null;
-  let progressTween: gsap.core.Tween | null = null;
+  let loadingAnimation: any = null;
+  let loadedAnimation: any = null;
+  let progressTween: any = null;
+  let gsapInstance: any = null;
+  let lottieInstance: any = null;
 
-  if (preloader && progressFill && lottieContainer) {
+  const getGsap = async () => {
+    if (gsapInstance) return gsapInstance;
+    const mod = await import("gsap");
+    gsapInstance = mod.gsap || mod.default || mod;
+    return gsapInstance;
+  };
+
+  const getLottie = async () => {
+    if (lottieInstance) return lottieInstance;
+    const mod = await import("lottie-web/build/player/lottie_light");
+    lottieInstance = mod.default || mod;
+    return lottieInstance;
+  };
+
+  const initPreloader = async () => {
+    if (!preloader || !progressFill || !lottieContainer) return;
     const preloaderShown = sessionStorage.getItem("preloaderShown");
 
     if (preloaderShown) {
       preloader.style.display = "none";
-    } else {
-      gsap.set(preloader, { autoAlpha: 1 });
-      gsap.set(progressFill, { width: "0%" });
-
-      const startProgress = () => {
-        progressTween = gsap.to(progressFill, {
-          width: "90%",
-          duration: 1.6,
-          ease: "power1.out",
-        });
-      };
-
-      const loadLoadingAnimation = async () => {
-        try {
-          const loadingResponse = await fetch("/loader/loading_state.json");
-          const loadingData = await loadingResponse.json();
-          loadingAnimation = lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            animationData: loadingData,
-          });
-        } catch (error) {
-          console.error("Failed to load loading animation:", error);
-          loadingAnimation = lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: "svg",
-            loop: true,
-            autoplay: true,
-            path: "/loader/loading_state.json",
-          });
-        }
-      };
-
-      const loadLoadedAnimation = async () => {
-        try {
-          const loadedResponse = await fetch("/loader/loaded_state.json");
-          const loadedData = await loadedResponse.json();
-          return lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: "svg",
-            loop: false,
-            autoplay: true,
-            animationData: loadedData,
-          });
-        } catch (error) {
-          console.error("Failed to load completion animation:", error);
-          return lottie.loadAnimation({
-            container: lottieContainer,
-            renderer: "svg",
-            loop: false,
-            autoplay: true,
-            path: "/loader/loaded_state.json",
-          });
-        }
-      };
-
-      startProgress();
-      loadLoadingAnimation();
-
-      let windowLoaded = false;
-
-      // Ensure we finish only when EVERYTHING is loaded
-      const onWindowLoad = () => {
-        if (windowLoaded) return;
-        windowLoaded = true;
-
-        // Force progress to 100% first
-        gsap.to(progressFill, {
-          width: "100%",
-          duration: 0.5,
-          onComplete: () => {
-            if (loadingAnimation) {
-              loadingAnimation.destroy();
-            }
-
-            loadLoadedAnimation()
-              .then((animation) => {
-                loadedAnimation = animation;
-                loadedAnimation.addEventListener("complete", finishLoading);
-              })
-              .catch(() => {
-                finishLoading();
-              });
-          },
-        });
-      };
-
-      if (document.readyState === "complete") {
-        onWindowLoad();
-      } else {
-        window.addEventListener("load", onWindowLoad);
-      }
-
-      // Fallback safety timeout
-      setTimeout(() => {
-        if (!windowLoaded) {
-          console.warn("Preloader timeout reached - forcing dismissal");
-          onWindowLoad();
-        }
-      }, 10000);
+      return;
     }
-  }
+
+    const gsap = await getGsap();
+    const lottie = await getLottie();
+
+    gsap.set(preloader, { autoAlpha: 1 });
+    gsap.set(progressFill, { width: "0%" });
+
+    const startProgress = () => {
+      progressTween = gsap.to(progressFill, {
+        width: "90%",
+        duration: 1.6,
+        ease: "power1.out",
+      });
+    };
+
+    const loadingPath = getAssetUrl("/loader/loading_state.json");
+    const loadedPath = getAssetUrl("/loader/loaded_state.json");
+
+    const loadLoadingAnimation = async () => {
+      try {
+        const loadingResponse = await fetch(loadingPath);
+        const loadingData = await loadingResponse.json();
+        loadingAnimation = lottie.loadAnimation({
+          container: lottieContainer,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          animationData: loadingData,
+        });
+      } catch (error) {
+        console.error("Failed to load loading animation:", error);
+        loadingAnimation = lottie.loadAnimation({
+          container: lottieContainer,
+          renderer: "svg",
+          loop: true,
+          autoplay: true,
+          path: loadingPath,
+        });
+      }
+    };
+
+    const loadLoadedAnimation = async () => {
+      try {
+        const loadedResponse = await fetch(loadedPath);
+        const loadedData = await loadedResponse.json();
+        return lottie.loadAnimation({
+          container: lottieContainer,
+          renderer: "svg",
+          loop: false,
+          autoplay: true,
+          animationData: loadedData,
+        });
+      } catch (error) {
+        console.error("Failed to load completion animation:", error);
+        return lottie.loadAnimation({
+          container: lottieContainer,
+          renderer: "svg",
+          loop: false,
+          autoplay: true,
+          path: loadedPath,
+        });
+      }
+    };
+
+    startProgress();
+    loadLoadingAnimation();
+
+    let windowLoaded = false;
+
+    // Ensure we finish only when EVERYTHING is loaded
+    const onWindowLoad = () => {
+      if (windowLoaded) return;
+      windowLoaded = true;
+
+      // Force progress to 100% first
+      gsap.to(progressFill, {
+        width: "100%",
+        duration: 0.5,
+        onComplete: () => {
+          if (loadingAnimation) {
+            loadingAnimation.destroy();
+          }
+
+          loadLoadedAnimation()
+            .then((animation) => {
+              loadedAnimation = animation;
+              loadedAnimation.addEventListener("complete", finishLoading);
+            })
+            .catch(() => {
+              finishLoading();
+            });
+        },
+      });
+    };
+
+    if (document.readyState === "complete") {
+      onWindowLoad();
+    } else {
+      window.addEventListener("load", onWindowLoad);
+    }
+
+    // Fallback safety timeout
+    setTimeout(() => {
+      if (!windowLoaded) {
+        console.warn("Preloader timeout reached - forcing dismissal");
+        onWindowLoad();
+      }
+    }, 10000);
+  };
 
   function finishLoading() {
     const preloader = document.getElementById("preloader");
-    if (!preloader) return;
+    if (!preloader || !gsapInstance) return;
 
-    const tl = gsap.timeline({
+    const tl = gsapInstance.timeline({
       onComplete: () => {
         sessionStorage.setItem("preloaderShown", "true");
         // Clean up animations
@@ -155,6 +176,14 @@
         ease: "power4.inOut",
       })
       .set(preloader, { display: "none" });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      void initPreloader();
+    });
+  } else {
+    void initPreloader();
   }
 </script>
 

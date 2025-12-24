@@ -39,11 +39,13 @@ import ProjectsIntro from "../components/ProjectsIntro.astro";
   </section>
 
   <section id="about" class="page-section">
-    <div class="hidden md:block">
-      <About />
-    </div>
-    <div class="md:hidden">
-      <About_Phone />
+    <div data-variant-host>
+      <template data-variant="desktop">
+        <About />
+      </template>
+      <template data-variant="mobile">
+        <About_Phone />
+      </template>
     </div>
   </section>
 
@@ -52,11 +54,13 @@ import ProjectsIntro from "../components/ProjectsIntro.astro";
   <DistinguishedSpeaker />
 
   <section id="domains" class="page-section">
-    <div class="domains-desktop-container">
-      <Domains />
-    </div>
-    <div class="domains-mobile-container">
-      <DomainsPhone />
+    <div data-variant-host>
+      <template data-variant="desktop">
+        <Domains />
+      </template>
+      <template data-variant="mobile">
+        <DomainsPhone />
+      </template>
     </div>
   </section>
 
@@ -67,11 +71,13 @@ import ProjectsIntro from "../components/ProjectsIntro.astro";
   <ProjectsIntro />
 
   <section id="projects" class="page-section">
-    <div class="hidden md:block">
-      <ProjectScreen projects={projectsData} />
-    </div>
-    <div class="md:hidden">
-      <ProjectScreenPhone projects={projectsData} />
+    <div data-variant-host>
+      <template data-variant="desktop">
+        <ProjectScreen projects={projectsData} />
+      </template>
+      <template data-variant="mobile">
+        <ProjectScreenPhone projects={projectsData} />
+      </template>
     </div>
     <div class="w-full flex justify-center py-10">
       <a
@@ -102,43 +108,25 @@ import ProjectsIntro from "../components/ProjectsIntro.astro";
   </section>
 
   <section id="gallery" class="page-section">
-    <div class="hidden md:block">
-      <Gallery />
-    </div>
-    <div class="md:hidden">
-      <Gallery_Phone />
+    <div data-variant-host>
+      <template data-variant="desktop">
+        <Gallery />
+      </template>
+      <template data-variant="mobile">
+        <Gallery_Phone />
+      </template>
     </div>
   </section>
 
   <section id="contact" class="page-section">
-    <div class="hidden md:block">
-      <ContactUS />
-    </div>
-    <div class="md:hidden">
-      <ContactUSPhone />
+    <div data-variant-host>
+      <template data-variant="desktop">
+        <ContactUS />
+      </template>
+      <template data-variant="mobile">
+        <ContactUSPhone />
+      </template>
     </div>
   </section>
   <Footer />
 </Layout>
-
-<style>
-  /* Show desktop version by default, hide mobile */
-  .domains-desktop-container {
-    display: block;
-  }
-
-  .domains-mobile-container {
-    display: none;
-  }
-
-  /* On mobile screens, hide desktop and show mobile */
-  @media (max-width: 768px) {
-    .domains-desktop-container {
-      display: none;
-    }
-
-    .domains-mobile-container {
-      display: block;
-    }
-  }
-</style>
