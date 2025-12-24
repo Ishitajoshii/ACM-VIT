@@ -343,24 +343,51 @@
       pointer-events: none;
     }
     .site-header {
-      top: auto;
-      bottom: 18px;
+      top: 15px;
+      bottom: auto;
+      padding: 0 15px;
     }
     .header-inner {
-      justify-content: center;
+      justify-content: flex-end;
+    }
+    #mobile-menu-btn,
+    #mobile-menu-close {
+      width: 45px;
+      height: 45px;
     }
     #mobile-menu-close {
-      top: auto;
-      right: auto;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 15px;
+      right: 15px;
+      bottom: auto;
+      left: auto;
+      transform: none;
     }
     .nav-desktop {
       display: none;
     }
     .nav-mobile {
       display: block;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .site-header {
+      top: 10px;
+      padding: 0 10px;
+    }
+    #mobile-menu-btn,
+    #mobile-menu-close {
+      width: 35px;
+      height: 35px;
+    }
+    #mobile-menu-btn svg,
+    #mobile-menu-close svg {
+      width: 20px;
+      height: 20px;
+    }
+    #mobile-menu-close {
+      top: 10px;
+      right: 10px;
     }
   }
 </style>
