@@ -126,6 +126,70 @@ import { getAssetUrl } from "../utils/cdn";
   </section>
 </div>
 
+<style>
+  @media (max-height: 720px) {
+    .about-container .text-container {
+      padding: 1.25rem;
+    }
+
+    .about-container .text-container > div {
+      font-size: 1.15rem;
+      line-height: 1.45;
+      gap: 1rem;
+    }
+
+    .about-container .svg-container {
+      width: 420px;
+      height: 420px;
+    }
+
+    .about-container .section-1 .svg-container {
+      margin-left: -20px;
+      margin-bottom: -420px;
+    }
+
+    .about-container .section-2 .svg-container {
+      margin-right: -60px;
+    }
+
+    .about-container .section-3 .svg-container {
+      margin-left: -20px;
+      margin-bottom: 100px;
+    }
+  }
+
+  @media (max-height: 600px) {
+    .about-container .text-container {
+      top: 56%;
+      padding: 1rem;
+    }
+
+    .about-container .text-container > div {
+      font-size: 1rem;
+      line-height: 1.4;
+      gap: 0.75rem;
+    }
+
+    .about-container .svg-container {
+      width: 360px;
+      height: 360px;
+    }
+
+    .about-container .section-1 .svg-container {
+      margin-bottom: -320px;
+    }
+
+    .about-container .section-2 .svg-container {
+      top: 55%;
+      margin-right: -40px;
+    }
+
+    .about-container .section-3 .svg-container {
+      margin-bottom: 40px;
+    }
+  }
+</style>
+
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";

@@ -179,14 +179,24 @@ const blogsWithImages = await Promise.all(
 </div>
 
 <style>
-  @media (max-height: 520px) {
+  @media (max-height: 700px) {
     .blogs-title-bar {
-      height: clamp(56px, 22vh, 140px);
+      height: clamp(72px, 24vh, 160px);
     }
 
     .blogs-title {
-      font-size: clamp(2rem, 18vh, 6rem);
+      font-size: clamp(2rem, 16vh, 6rem);
       line-height: 0.9;
+    }
+  }
+
+  @media (max-height: 400px) {
+    .blogs-title-bar {
+      height: clamp(56px, 28vh, 120px);
+    }
+
+    .blogs-title {
+      font-size: clamp(1.6rem, 14vh, 4rem);
     }
   }
 </style>
