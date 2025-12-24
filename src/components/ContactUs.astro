@@ -152,7 +152,9 @@
   };
 
   const updatePerfSettings = () => {
-    const isNarrow = window.innerWidth < 768;
+    const isNarrow = window.matchMedia(
+      "(max-width: 768px), (pointer: coarse)"
+    ).matches;
     maxCacheSize = isNarrow ? 8 : 14;
     preloadRadius = isNarrow ? 3 : 6;
   };
@@ -170,7 +172,11 @@
     updatePerfSettings();
     const rect = canvas.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
-    const maxDpr = window.innerWidth < 768 ? 1.25 : 1.5;
+    const maxDpr = window.matchMedia(
+      "(max-width: 768px), (pointer: coarse)"
+    ).matches
+      ? 1.25
+      : 1.5;
     const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
     const width = Math.round(rect.width * dpr);
     const height = Math.round(rect.height * dpr);

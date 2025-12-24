@@ -97,7 +97,7 @@
     background-color: #060606;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px), (pointer: coarse) {
     .radial-bg {
       background-attachment: scroll, scroll;
     }
@@ -111,7 +111,9 @@
   gsap.registerPlugin(ScrollTrigger);
 
   const initAnimation = () => {
-    const isMobile = window.innerWidth < 768;
+    const isMobile = window.matchMedia(
+      "(max-width: 768px), (pointer: coarse)"
+    ).matches;
     const lineHeight = isMobile ? 50 : 75;
 
     // All lines start stacked at center (y: 0)

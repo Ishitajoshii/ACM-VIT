@@ -62,7 +62,7 @@ const init = () => {
   let cacheSignature = "";
 
   const getPagesPerSpread = () =>
-    window.matchMedia("(max-width: 768px)").matches ? 1 : 2;
+    window.matchMedia("(max-width: 768px), (pointer: coarse)").matches ? 1 : 2;
 
   const getCanvasContext = (canvas: HTMLCanvasElement) =>
     canvas.getContext("2d");

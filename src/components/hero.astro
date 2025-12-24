@@ -12,7 +12,7 @@
       style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);"
     >
       <div
-        class="w-[1145px] inline-flex flex-col justify-start items-start max-md:w-full max-md:max-w-[96vw]"
+        class="hero-text-wrap w-[1145px] inline-flex flex-col justify-start items-start max-md:w-full max-md:max-w-[96vw]"
       >
         <div
           class="hero-line-1 self-stretch justify-start text-7xl font-bold max-md:text-[clamp(2.2rem,10vw,3rem)] max-md:leading-[1.05]"
@@ -80,7 +80,22 @@
         right: 2rem !important;
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 768px), (pointer: coarse) {
+        .hero-section {
+          padding-left: 8vw;
+        }
+        .hero-text-wrap {
+          width: 100%;
+          max-width: 92vw;
+        }
+        .hero-line-1 {
+          font-size: clamp(2.2rem, 8.5vw, 3.6rem);
+          line-height: 1.05;
+        }
+        .hero-line-2 {
+          font-size: clamp(2.2rem, 9.5vw, 4rem);
+          line-height: 1.05;
+        }
         .hero-line-2 br {
           display: none;
         }

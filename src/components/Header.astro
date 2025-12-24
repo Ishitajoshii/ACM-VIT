@@ -334,9 +334,13 @@
     transition-delay: 0.1s;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 768px), (pointer: coarse) {
     body.partners-active .site-header {
-      z-index: -200;
+      z-index: 200;
+    }
+    body.mobile-menu-open #mobile-menu-btn {
+      opacity: 0;
+      pointer-events: none;
     }
     .site-header {
       top: auto;
