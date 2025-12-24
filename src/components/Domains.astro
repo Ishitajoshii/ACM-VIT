@@ -225,6 +225,7 @@ import { getAssetUrl } from "../utils/cdn";
 
         // Debounced initialization
         let initialized = false;
+        let mainTl: gsap.core.Timeline | null = null;
 
         function initAnimation() {
           if (initialized) return;
@@ -301,6 +302,8 @@ import { getAssetUrl } from "../utils/cdn";
                 gsap.to(bgLayer, { opacity: 0, duration: 0.5 }),
             },
           });
+          
+          mainTl = tl;
 
           // Phase 1: Appear and form grid
           tl.to(subtitle, {
@@ -409,6 +412,11 @@ import { getAssetUrl } from "../utils/cdn";
 
         // Function to show domain screen
         function showDomainScreen(domain: string) {
+          if (mainTl && mainTl.scrollTrigger) {
+            mainTl.scrollTrigger.disable(false);
+          }
+          document.body.style.overflow = "hidden";
+
           // Hide all cassettes and subtitle with animation
           const items = document.querySelectorAll(".domain-item");
           const subtitle = document.querySelector(".section-subtitle");
@@ -691,6 +699,11 @@ import { getAssetUrl } from "../utils/cdn";
             const exitTl = gsap.timeline({
               onComplete: () => {
                 domainScreen.remove();
+
+                if (mainTl && mainTl.scrollTrigger) {
+                  mainTl.scrollTrigger.enable();
+                }
+                document.body.style.overflow = "";
 
                 // Create smooth entrance timeline for original elements
                 const entranceTl = gsap.timeline();
