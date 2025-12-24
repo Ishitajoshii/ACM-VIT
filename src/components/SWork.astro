@@ -452,7 +452,6 @@ const worksHeightMobile = works.length * 45;
       }
     }
 
-
     init() {
       this.setCtxStyle();
       this.setSize();
@@ -574,7 +573,7 @@ const worksHeightMobile = works.length * 45;
 
       let size = (corners.tr.x - corners.tl.x) / 2;
       const safeWidth = window.safeWidth || window.innerWidth;
-      mask.maxScale = safeWidth / size;
+      mask.maxScale = (safeWidth / size) * 0.75;
 
       let dInner = `M ${corners.tl.x} ${corners.tl.y + size} A ${size} ${size} 0 0 1 ${corners.tr.x} ${corners.tr.y + size} L ${corners.br.x} ${corners.br.y - size} A ${size} ${size} 0 0 1 ${corners.bl.x} ${corners.bl.y - size} Z`;
       const linesClip = `${dOuter} ${dInner}`;
@@ -710,7 +709,7 @@ const worksHeightMobile = works.length * 45;
         tl.kill();
       }
 
-      const introDuration = 5.0;
+      const introDuration = 10.0;
       const cardsDelay = 0.35;
       const cardsStart = introDuration + cardsDelay;
 
@@ -731,15 +730,16 @@ const worksHeightMobile = works.length * 45;
       ).matches;
 
       tl.fromTo(
-        mask.el,
-        { scale: 1 },
-        { scale: mask.maxScale, duration: introDuration, ease: "power4.in" },
-        0
-      );
-      tl.fromTo(
         scene,
         { scale: 0.75 },
         { scale: 1, duration: introDuration, ease: "power3.in" },
+        0
+      );
+
+      tl.fromTo(
+        mask.el,
+        { scale: 1 },
+        { scale: mask.maxScale, duration: introDuration, ease: "power4.in" },
         0
       );
 
@@ -1241,7 +1241,6 @@ const worksHeightMobile = works.length * 45;
             )
             scale(var(--size));
         }
-
       }
     }
 
@@ -1252,7 +1251,7 @@ const worksHeightMobile = works.length * 45;
       z-index: 1;
       width: 100%;
       height: 100%;
-      transform: translate3d(0, calc(var(--scroll-progress) * -5%), 0);
+      transform: translate3d(0, calc(var(--scroll-progress) * -5%), 10);
 
       @media only screen and (max-width: 767px) and (orientation: landscape),
         only screen and (max-width: 576px) {
@@ -1271,6 +1270,7 @@ const worksHeightMobile = works.length * 45;
     padding: 0.5rem 0.5rem 0;
     margin: 0;
     padding: 0.5rem 0.5rem 0;
+    border-radius: 1.5rem;
     background: var(--color-secondary);
     /* content-visibility: hidden; -- REMOVED to prevent interactivity issues */
     transform-style: preserve-3d;
