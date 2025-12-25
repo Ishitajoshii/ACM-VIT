@@ -16,7 +16,6 @@
 
   let loadingAnimation: any = null;
   let loadedAnimation: any = null;
-  let progressTween: any = null;
   let gsapInstance: any = null;
   let lottieInstance: any = null;
 
@@ -50,9 +49,9 @@
     gsap.set(progressFill, { width: "0%" });
 
     const startProgress = () => {
-      progressTween = gsap.to(progressFill, {
-        width: "90%",
-        duration: 1.6,
+      gsap.to(progressFill, {
+        width: "30%",
+        duration: 2,
         ease: "power1.out",
       });
     };
@@ -166,7 +165,11 @@
         const onProgress = () => {
           loaded++;
           const pct = Math.min(90, Math.round((loaded / total) * 90));
-          if (progressTween) progressTween.progress(pct / 90);
+          gsap.to(progressFill, {
+            width: `${pct}%`,
+            duration: 0.5,
+            overwrite: true,
+          });
           if (loaded >= total) resolve(true);
         };
 
@@ -263,7 +266,7 @@
       onComplete: () => {
         sessionStorage.setItem("preloaderShown", "true");
         // Clean up animations
-        if (progressTween) progressTween.kill();
+        if (gsapInstance) gsapInstance.killTweensOf(progressFill);
         if (loadingAnimation) loadingAnimation.destroy();
         if (loadedAnimation) loadedAnimation.destroy();
       },
