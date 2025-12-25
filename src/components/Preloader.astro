@@ -18,6 +18,11 @@
   let loadedAnimation: any = null;
   let gsapInstance: any = null;
   let lottieInstance: any = null;
+  let progressValue = 0;
+  let hasStartedCompletion = false;
+  let hasFinished = false;
+  let fallbackTimeoutId = 0;
+  let loadingRequestId = 0;
 
   const getGsap = async () => {
     if (gsapInstance) return gsapInstance;
@@ -48,21 +53,34 @@
     gsap.set(preloader, { autoAlpha: 1 });
     gsap.set(progressFill, { width: "0%" });
 
-    const startProgress = () => {
-      gsap.to(progressFill, {
-        width: "30%",
-        duration: 2,
+    const updateProgress = (pct: number) => {
+      const nextValue = Math.max(progressValue, Math.min(90, pct));
+      if (nextValue === progressValue) return;
+      progressValue = nextValue;
+      if (progressTween) progressTween.kill();
+      progressTween = gsap.to(progressFill, {
+        width: `${nextValue}%`,
+        duration: 0.2,
         ease: "power1.out",
+        overwrite: "auto",
       });
+    };
+
+    const startProgress = () => {
+      progressValue = 0;
+      if (progressTween) progressTween.kill();
+      gsap.set(progressFill, { width: "0%" });
     };
 
     const loadingPath = getAssetUrl("/loader/loading_state.json");
     const loadedPath = getAssetUrl("/loader/loaded_state.json");
 
     const loadLoadingAnimation = async () => {
+      const requestId = ++loadingRequestId;
       try {
         const loadingResponse = await fetch(loadingPath);
         const loadingData = await loadingResponse.json();
+        if (hasStartedCompletion || hasFinished || requestId !== loadingRequestId) return;
         loadingAnimation = lottie.loadAnimation({
           container: lottieContainer,
           renderer: "svg",
@@ -72,6 +90,7 @@
         });
       } catch (error) {
         console.error("Failed to load loading animation:", error);
+        if (hasStartedCompletion || hasFinished || requestId !== loadingRequestId) return;
         loadingAnimation = lottie.loadAnimation({
           container: lottieContainer,
           renderer: "svg",
@@ -83,9 +102,11 @@
     };
 
     const loadLoadedAnimation = async () => {
+      if (hasFinished) return null;
       try {
         const loadedResponse = await fetch(loadedPath);
         const loadedData = await loadedResponse.json();
+        if (hasFinished) return null;
         return lottie.loadAnimation({
           container: lottieContainer,
           renderer: "svg",
@@ -95,6 +116,7 @@
         });
       } catch (error) {
         console.error("Failed to load completion animation:", error);
+        if (hasFinished) return null;
         return lottie.loadAnimation({
           container: lottieContainer,
           renderer: "svg",
@@ -165,11 +187,7 @@
         const onProgress = () => {
           loaded++;
           const pct = Math.min(90, Math.round((loaded / total) * 90));
-          gsap.to(progressFill, {
-            width: `${pct}%`,
-            duration: 0.5,
-            overwrite: true,
-          });
+          updateProgress(pct);
           if (loaded >= total) resolve(true);
         };
 
@@ -205,24 +223,40 @@
         console.warn('Asset preloading failed', e);
       }
       assetsLoaded = true;
-      // If window already loaded, proceed
-      if (windowLoaded) {
+      maybeProceed();
+    };
+
+    const maybeProceed = () => {
+      if (hasStartedCompletion || hasFinished) return;
+      if (windowLoaded && assetsLoaded) {
         proceedAfterAssets();
       }
     };
 
     const proceedAfterAssets = () => {
+      if (hasStartedCompletion || hasFinished) return;
+      hasStartedCompletion = true;
+      loadingRequestId += 1;
       // Force progress to 100% first
-      gsap.to(progressFill, {
+      if (progressTween) progressTween.kill();
+      progressTween = gsap.to(progressFill, {
         width: '100%',
         duration: 0.5,
         onComplete: () => {
           if (loadingAnimation) {
             loadingAnimation.destroy();
+            loadingAnimation = null;
+          }
+          if (lottieContainer) {
+            lottieContainer.innerHTML = "";
           }
 
           loadLoadedAnimation()
             .then((animation) => {
+              if (!animation) {
+                finishLoading();
+                return;
+              }
               loadedAnimation = animation;
               loadedAnimation.addEventListener('complete', finishLoading);
             })
@@ -238,29 +272,32 @@
     const onWindowLoad = () => {
       if (windowLoaded) return;
       windowLoaded = true;
-      if (assetsLoaded) {
-        proceedAfterAssets();
-      }
+      maybeProceed();
     };
 
     if (document.readyState === 'complete') {
       onWindowLoad();
     } else {
-      window.addEventListener('load', onWindowLoad);
+      window.addEventListener('load', onWindowLoad, { once: true });
     }
 
     // Fallback safety timeout
-    setTimeout(() => {
-      if (!windowLoaded || !assetsLoaded) {
-        console.warn('Preloader timeout reached - forcing dismissal');
-        proceedAfterAssets();
-      }
+    fallbackTimeoutId = window.setTimeout(() => {
+      if (hasStartedCompletion || hasFinished) return;
+      console.warn('Preloader timeout reached - forcing dismissal');
+      proceedAfterAssets();
     }, 7000);
   };
 
   function finishLoading() {
     const preloader = document.getElementById("preloader");
-    if (!preloader || !gsapInstance) return;
+    if (!preloader || !gsapInstance || hasFinished) return;
+    hasFinished = true;
+    hasStartedCompletion = true;
+    if (fallbackTimeoutId) window.clearTimeout(fallbackTimeoutId);
+    if (loadedAnimation) {
+      loadedAnimation.removeEventListener("complete", finishLoading);
+    }
 
     const tl = gsapInstance.timeline({
       onComplete: () => {
