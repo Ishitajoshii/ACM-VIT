@@ -16,6 +16,7 @@
 
   let loadingAnimation: any = null;
   let loadedAnimation: any = null;
+  let progressTween: any = null;
   let gsapInstance: any = null;
   let lottieInstance: any = null;
   let progressValue = 0;
@@ -303,7 +304,7 @@
       onComplete: () => {
         sessionStorage.setItem("preloaderShown", "true");
         // Clean up animations
-        if (gsapInstance) gsapInstance.killTweensOf(progressFill);
+        if (progressTween) progressTween.kill();
         if (loadingAnimation) loadingAnimation.destroy();
         if (loadedAnimation) loadedAnimation.destroy();
       },
