@@ -106,7 +106,15 @@ const normalizedMp4Src = mp4Src.startsWith("/") ? mp4Src : `/${mp4Src}`;
             return;
         }
 
+        if (video.dataset.scrollInit === "true") {
+            return;
+        }
+        video.dataset.scrollInit = "true";
+
         const startTime = parseFloat(video.dataset.startTime || "0");
+        const minStep = 1 / 180;
+        let scrubTrigger: any = null;
+        let visibilityTrigger: any = null;
 
         const setupScrollTrigger = () => {
             const videoDuration = video.duration;
@@ -114,47 +122,48 @@ const normalizedMp4Src = mp4Src.startsWith("/") ? mp4Src : `/${mp4Src}`;
                 return;
             }
 
-            const endTime = video.dataset.endTime
+            const requestedEndTime = video.dataset.endTime
                 ? parseFloat(video.dataset.endTime)
                 : videoDuration;
-            const playDuration = endTime - startTime;
+            const endTime = Math.max(startTime + minStep, requestedEndTime);
+            const playDuration = Math.max(minStep, endTime - startTime);
 
             video.currentTime = startTime;
 
-            let targetTime = startTime;
-            let currentDisplayTime = startTime;
-            let rafId: number | null = null;
-            const lerpFactor = 0.05;
+            const applyVideoTime = (nextTime: number) => {
+                const clamped = Math.max(startTime, Math.min(endTime, nextTime));
+                const diff = Math.abs(video.currentTime - clamped);
+                if (diff <= minStep) return;
 
-            const smoothUpdate = () => {
-                currentDisplayTime += (targetTime - currentDisplayTime) * lerpFactor;
-
-                if (Math.abs(video.currentTime - currentDisplayTime) > 0.001) {
-                    video.currentTime = currentDisplayTime;
-                }
-
-                if (Math.abs(targetTime - currentDisplayTime) > 0.0001) {
-                    rafId = requestAnimationFrame(smoothUpdate);
-                } else {
-                    rafId = null;
+                try {
+                    if (typeof video.fastSeek === "function" && diff > 0.35) {
+                        video.fastSeek(clamped);
+                    } else {
+                        video.currentTime = clamped;
+                    }
+                } catch {
+                    video.currentTime = clamped;
                 }
             };
 
-            ScrollTrigger.create({
+            scrubTrigger?.kill();
+            visibilityTrigger?.kill();
+
+            scrubTrigger = ScrollTrigger.create({
                 trigger: container,
                 start: "top top",
                 end: "bottom bottom",
-                scrub: 0.5,
+                scrub: 0.08,
+                invalidateOnRefresh: true,
                 onUpdate: (self) => {
-                    targetTime = startTime + self.progress * playDuration;
-
-                    if (rafId === null) {
-                        rafId = requestAnimationFrame(smoothUpdate);
-                    }
+                    applyVideoTime(startTime + self.progress * playDuration);
+                },
+                onRefresh: (self) => {
+                    applyVideoTime(startTime + self.progress * playDuration);
                 },
             });
 
-            ScrollTrigger.create({
+            visibilityTrigger = ScrollTrigger.create({
                 trigger: container,
                 start: "top 90%",
                 end: "bottom 60%",
@@ -179,6 +188,8 @@ const normalizedMp4Src = mp4Src.startsWith("/") ? mp4Src : `/${mp4Src}`;
                     document.body.classList.remove("scroll-video-active");
                 },
             });
+
+            window.requestAnimationFrame(() => ScrollTrigger.refresh());
         };
 
         if (video.readyState >= 1) {

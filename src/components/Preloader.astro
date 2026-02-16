@@ -28,7 +28,7 @@
 
   const CRITICAL_WARMUP_TIMEOUT = 7500;
   const VARIANTS_WAIT_TIMEOUT = 1600;
-  const VIDEO_WARM_TIMEOUT = 7000;
+  const VIDEO_WARM_TIMEOUT = 10000;
 
   const getGsap = async () => {
     if (gsapInstance) return gsapInstance;
@@ -140,7 +140,7 @@
     const buffered = video.buffered;
     if (!buffered.length) return false;
     const end = buffered.end(buffered.length - 1);
-    return end / duration >= 0.96;
+    return end / duration >= 0.995;
   };
 
   const warmScrollVideo = (timeoutMs = VIDEO_WARM_TIMEOUT) =>
