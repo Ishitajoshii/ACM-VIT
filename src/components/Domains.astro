@@ -231,7 +231,7 @@ import { getAssetUrl } from "../utils/cdn";
           if (initialized) return;
           initialized = true;
 
-          const vw = window.innerWidth;
+          const vw = document.documentElement.clientWidth;
           const scale = Math.min(Math.max(vw / 1440, 0.5), 1.2);  
 
           // Grid positions (2x3 layout)
